@@ -1,50 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - gymTECH</title>
-</head>
-<body>
-    <div>
-        <header>
-            <h1>gymTECH</h1>
-        </header>
-    </div>
+<html lang="pt-br">
 
-    <div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>gymTECH | Cadastro</title>
+
+  <script src="./js/sessao.js"></script>
+
+  <link rel="stylesheet" href="./css/estilo.css" />
+  <link rel="icon" href="./assets/icon/favicon2.ico" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+</head>
+
+<body>
+  <!--header inicio-->
+  <div class="header">
+    <div class="container">
+      <h1 class="titulo">gymTECH</h1>
+    </div>
+  </div>
+  <!--header fim-->
+  <div class="login">
+    <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="card card-cadastro">
         <h2>Criar conta</h2>
         <h3>Leva menos de um minuto para começar</h3>
-
-        <label for="ipt_nome">Nome</label>
-        <input type="text" id="ipt_nome">
-
-        <label for="ipt_email">E-mail</label>
-        <input type="email" id="ipt_email">
-
-        <label for="ipt_senha">Senha</label>
-        <input type="password" id="ipt_senha">
-
-        <label for="ipt_senhaConfirmar">Confirmar Senha</label>
-        <input type="password" id="ipt_senhaConfirmar">
-
-        <div>
-            <label for="ipt_check">Li e aceito os termos de uso</label>
-            <input type="checkbox" name="ipt_check" id="ipt_check">
+        <div class="formulario">
+          <div class="campo">
+            <span>Nome:</span>
+            <input id="nome_input" type="text" placeholder="Seu nome" />
+          </div>
+          <div class="campo">
+            <span>E-mail:</span>
+            <input id="email_input" type="text" placeholder="voce@email.com" />
+          </div>
+          <div class="campo">
+            <span>Senha:</span>
+            <input id="senha_input" type="password" placeholder="Minimo de 8 caracteres" />
+          </div>
+          <div class="campo">
+            <span>Confirmação da Senha:</span>
+            <input id="confirmacao_senha_input" type="password" placeholder="Repita a senha" />
+          </div>
+          <button class="botao" onclick="cadastrar()">Cadastrar</button>
+        </div>
+        <div id="div_aguardar" class="loading-div">
+          <img src="./assets/circle-loading.gif" id="loading-gif" />
         </div>
 
-        <button onclick="cadastrar()">Criar conta</button>
-
-        Já tem uma conta? <a href="">Entrar</a>
+        <div id="div_erros_login"></div>
+      </div>
     </div>
+  </div>
 </body>
 </html>
 <script>
-    function cadastrar(){
-        let nome = ipt_nome.value.trim();
-        let email = ipt_email.value.trim();
-        let senha = ipt_senha.value.trim();
-        let senhaConfirmar = ipt_senhaConfirmar.value.trim();
+  function cadastrar() {
+    var nomeVar = nome_input.value.trim();
+    var emailVar = email_input.value.trim();
+    var senhaVar = senha_input.value.trim();
+    var confirmacaoSenhaVar = confirmacao_senha_input.value.trim();
 
+    // Verificando se há algum campo em branco
+    if (
+      nomeVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" ||
+      confirmacaoSenhaVar == ""
+    ) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(Mensagem de erro para todos os campos em branco)";
+
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(sumirMensagem, 5000);
     }
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
 </script>
