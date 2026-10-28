@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>gymTECH | Página Inicial</title>
+
+    <script src="./js/sessao.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" href="./assets/icon/favicon2.ico">
+</head>
+
+<body>
+    <!-- MENU -->
+    <div class="header">
+        <div class="container">
+            <a class="titulo" href="index.html">gym<span>TECH</span></a>
+            <ul class="navbar">
+                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                <li><a href="#paineis">Painéis</a></li>
+                <li><a href="#exercicios">Exercícios</a></li>
+            </ul>
+            <div class="auth">
+                <a class="btn btn-dark" href="login.html">Entrar</a>
+                <a class="btn btn-purple" href="cadastro.html">Criar conta</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- BANNER -->
+    <div class="banner">
+        <div class="container">
+            <div class="banner-text">
+                <span class="badge">Para praticantes de musculação</span>
+                <h1>Registre seus treinos. <span>Veja sua evolução.</span></h1>
+                <p class="lead">Anote exercícios e séries, acompanhe sua frequência mensal e saiba se o volume semanal de cada grupo muscular está na faixa recomendada.</p>
+                <div class="hero-buttons">
+                    <a class="btn btn-purple" href="cadastro.html">Começar agora</a>
+                    <a class="btn btn-dark" href="#funcionalidades">Ver como funciona</a>
+                </div>
+            </div>
+
+            <div class="mockup">
+                <span class="float-badge">Pernas abaixo da faixa</span>
+
+                <div class="mockup-top">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="url">gymtech.app/painel</span>
+                </div>
+
+                <div class="mockup-main">
+                    <div class="mockup-side">
+                        <span class="logo-g">K</span>
+                        <span class="side-item"></span>
+                        <span class="side-item"></span>
+                        <span class="side-item"></span>
+                        <span class="side-item"></span>
+                    </div>
+
+                    <div class="mockup-content">
+                        <div class="mockup-head">
+                            <strong>Painel</strong>
+                            <span>Dezembro</span>
+                        </div>
+
+                        <div class="stats">
+                            <div class="stat">
+                                <strong>14</strong>
+                                <span>treinos no mês</span>
+                            </div>
+                            <div class="stat">
+                                <strong>58</strong>
+                                <span>séries na semana</span>
+                            </div>
+                            <div class="stat">
+                                <strong class="cyan-text">4 dias</strong>
+                                <span>de sequência</span>
+                            </div>
+                        </div>
+
+                        <div class="mini-panels">
+                            <div class="mini-panel">
+                                <h4>Frequência</h4>
+                                <div class="calendar" id="heroCalendar"></div>
+                            </div>
+                            <div class="mini-panel">
+                                <h4>Volume semanal</h4>
+                                <div id="heroVolume"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="toast">
+                    <span class="check">✓</span>
+                    <div>
+                        <strong>Treino salvo</strong>
+                        <span>Peito e tríceps · 12 séries</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUNCIONALIDADES -->
+    <div class="social" id="funcionalidades">
+        <div class="container">
+            <h2>Tudo o que você precisa para treinar com dados</h2>
+            <p class="subtitle">Três funções simples, feitas para o seu dia a dia na academia.</p>
+
+            <div class="boxes">
+                <div class="box">
+                    <span class="number">01</span>
+                    <h3>Registro de treinos</h3>
+                    <p>Marque os dias que você foi, adicione exercícios e informe quantas séries fez em cada um.</p>
+                </div>
+                <div class="box">
+                    <span class="number">02</span>
+                    <h3>Frequência mensal</h3>
+                    <p>Veja em um calendário quantos dias você treinou no mês e mantenha a constância.</p>
+                </div>
+                <div class="box">
+                    <span class="number">03</span>
+                    <h3>Volume semanal</h3>
+                    <p>Compare as séries por grupo muscular com a faixa recomendada e ajuste seu treino.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAINÉIS -->
+    <div class="panels" id="paineis">
+        <div class="container">
+            <div class="panel">
+                <h3>Frequência mensal</h3>
+                <p class="subtitle">Cada quadrado é um dia. Os acesos são treinos.</p>
+                <div class="calendar big" id="monthCalendar"></div>
+            </div>
+
+            <div class="panel">
+                <h3>Volume semanal por grupo muscular</h3>
+                <p class="subtitle">A faixa sombreada é a recomendada (10 a 20 séries).</p>
+                <div id="panelVolume"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIOS -->
+    <div class="exercises" id="exercicios">
+        <div class="container">
+            <div class="exercises-head">
+                <div>
+                    <h2>Aprenda cada exercício</h2>
+                    <p class="subtitle">Músculos trabalhados, execução e dicas, tudo em um só lugar.</p>
+                </div>
+                <a class="more" href="simulador.html">Ver todos os exercícios →</a>
+            </div>
+
+            <div class="exercise-grid">
+                <div class="exercise">
+                    <div class="exercise-img">[IMAGEM]</div>
+                    <div class="exercise-info">
+                        <h3>Supino reto</h3>
+                        <p>Peito · Tríceps</p>
+                    </div>
+                </div>
+                <div class="exercise">
+                    <div class="exercise-img">[IMAGEM]</div>
+                    <div class="exercise-info">
+                        <h3>Agachamento livre</h3>
+                        <p>Quadríceps · Glúteos</p>
+                    </div>
+                </div>
+                <div class="exercise">
+                    <div class="exercise-img">[IMAGEM]</div>
+                    <div class="exercise-info">
+                        <h3>Remada curvada</h3>
+                        <p>Costas · Bíceps</p>
+                    </div>
+                </div>
+                <div class="exercise">
+                    <div class="exercise-img">[IMAGEM]</div>
+                    <div class="exercise-info">
+                        <h3>Desenvolvimento</h3>
+                        <p>Ombros · Tríceps</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAMADA FINAL -->
+    <div class="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Comece a registrar hoje</h2>
+                <p>Crie sua conta e acompanhe seu próximo treino.</p>
+                <a class="btn btn-black" href="cadastro.html">Criar conta grátis</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="footer">
+        <div class="container">
+            <a class="titulo" href="index.html">gym<span>TECH</span></a>
+            <span>Projeto individual · SPTECH</span>
+        </div>
+    </div>
+
+    <script>
+        // Dados de exemplo (depois virão do banco)
+        var weeklyVolume = [
+            { muscleGroup: "Peito", sets: 16 },
+            { muscleGroup: "Costas", sets: 12 },
+            { muscleGroup: "Pernas", sets: 8 },
+            { muscleGroup: "Ombros", sets: 22 },
+            { muscleGroup: "Bíceps", sets: 10 }
+        ];
+
+        // 2 = treino, 1 = treino leve, 0 = sem treino (28 dias, 14 treinos)
+        var monthDays = [
+            2, 0, 2, 1, 2, 0, 0,
+            2, 2, 0, 2, 0, 1, 0,
+            2, 0, 2, 0, 0, 2, 0,
+            0, 2, 1, 2, 0, 0, 0
+        ];
+
+        var chartMax = 24;
+
+        function renderCalendar(elementId, totalDays) {
+            var html = "";
+
+            for (var i = 0; i < totalDays; i++) {
+                var className = "day";
+
+                if (monthDays[i] == 2) {
+                    className += " on";
+                } else if (monthDays[i] == 1) {
+                    className += " light";
+                }
+
+                html += '<span class="' + className + '"></span>';
+            }
+
+            document.getElementById(elementId).innerHTML = html;
+        }
+
+        function getColor(sets) {
+            if (sets < 10) {
+                return "cyan";
+            }
+            if (sets > 20) {
+                return "coral";
+            }
+            return "purple";
+        }
+
+        function renderVolume(elementId, totalGroups) {
+            var html = "";
+
+            for (var i = 0; i < totalGroups; i++) {
+                var width = weeklyVolume[i].sets / chartMax * 100;
+
+                html += '<div class="bar-row">';
+                html += '<span class="label">' + weeklyVolume[i].muscleGroup + '</span>';
+                html += '<div class="track">';
+                html += '<div class="band"></div>';
+                html += '<div class="fill ' + getColor(weeklyVolume[i].sets) + '" style="width:' + width + '%"></div>';
+                html += '</div>';
+                html += '<span class="value">' + weeklyVolume[i].sets + '</span>';
+                html += '</div>';
+            }
+
+            document.getElementById(elementId).innerHTML = html;
+        }
+
+        renderCalendar("heroCalendar", 21);
+        renderCalendar("monthCalendar", 28);
+        renderVolume("heroVolume", 4);
+        renderVolume("panelVolume", 5);
+    </script>
+</body>
+
+</html>
