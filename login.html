@@ -6,12 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AquaTech | Login</title>
+    <title>gymTECH | Login</title>
 
     <script src="./js/sessao.js"></script>
 
     <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 
@@ -40,7 +39,7 @@
                     </div>
                     <div class="campo">
                         <span>Senha:</span>
-                        <input id="senha_input" type="password" placeholder="Sua senha">
+                        <input id="password_input" type="password" placeholder="Sua senha">
                     </div>
                     <button class="botao" onclick="entrar()">Entrar</button>
                 </div>
@@ -59,9 +58,9 @@
     function entrar() {
         aguardar();
         var emailVar = email_input.value;
-        var senhaVar = senha_input.value;
+        var passwordVar = senha_input.value;
 
-        if (emailVar == "" || senhaVar == "") {
+        if (emailVar == "" || passwordVar == "") {
             cardErro.style.display = "block"
             mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
             finalizarAguardar();
@@ -72,7 +71,7 @@
         }
 
         console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
+        console.log("FORM SENHA: ", passwordVar);
 
         fetch("/usuarios/autenticar", {
             method: "POST",
@@ -81,7 +80,7 @@
             },
             body: JSON.stringify({
                 emailServer: emailVar,
-                senhaServer: senhaVar
+                passwordServer: passwordVar
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")

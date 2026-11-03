@@ -11,7 +11,6 @@
   <script src="./js/sessao.js"></script>
 
   <link rel="stylesheet" href="./css/estilo.css" />
-  <link rel="icon" href="./assets/icon/favicon2.ico" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 </head>
 
@@ -36,7 +35,7 @@
         <div class="formulario">
           <div class="campo">
             <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome" />
+            <input id="name_input" type="text" placeholder="Seu nome" />
           </div>
           <div class="campo">
             <span>E-mail:</span>
@@ -44,11 +43,11 @@
           </div>
           <div class="campo">
             <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="Minimo de 8 caracteres" />
+            <input id="password_input" type="password" placeholder="Minimo de 8 caracteres" />
           </div>
           <div class="campo">
             <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="Repita a senha" />
+            <input id="confirmPassword_input" type="password" placeholder="Repita a senha" />
           </div>
           <button class="botao" onclick="cadastrar()">Cadastrar</button>
         </div>
@@ -64,17 +63,17 @@
 </html>
 <script>
   function cadastrar() {
-    var nomeVar = nome_input.value.trim();
+    var nameVar = name_input.value.trim();
     var emailVar = email_input.value.trim();
-    var senhaVar = senha_input.value.trim();
-    var confirmacaoSenhaVar = confirmacao_senha_input.value.trim();
+    var passwordVar = password_input.value.trim();
+    var confirmPassVar = confirmPassword_input.value.trim();
 
     // Verificando se há algum campo em branco
     if (
-      nomeVar == "" ||
+      nameVar == "" ||
       emailVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == ""
+      passwordVar == "" ||
+      confirmPassVar == ""
     ) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML =
@@ -95,9 +94,9 @@
       body: JSON.stringify({
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
+        nameServer: nameVar,
         emailServer: emailVar,
-        senhaServer: senhaVar,
+        passwordServer: passwordVar,
       }),
     })
       .then(function (resposta) {
