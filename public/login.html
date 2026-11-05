@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gymTECH | Login</title>
+    <script src="./js/sessao.js"></script>
+    <link rel="stylesheet" href="./css/auth.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+</head>
+
+<body>
+    <!--Header-->
+    <div class="header">
+        <div class="container">
+            <a class="titulo" href="index.html">gym<span>TECH</span></a>
+        </div>
+    </div>
+    <!--header fim-->
+
+    <div class="login">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="hero">
+                <span class="eyebrow">Registre · Acompanhe · Evolua</span>
+                <h1>Cada série <span>conta.</span></h1>
+                <p class="lead">Registre seus treinos e acompanhe a frequência e o volume de cada grupo muscular.</p>
+            </div>
+
+            <div class="card card-login">
+                <h2>Entrar</h2>
+                <h3>Acesse sua conta para registrar treinos e ver seus painéis.</h3>
+
+                <form class="formulario" onsubmit="event.preventDefault(); enter();">
+                    <div class="campo">
+                        <label for="email_input">E-mail:</label>
+                        <input id="email_input" type="email" placeholder="voce@email.com">
+                    </div>
+
+                    <div class="campo">
+                        <label for="password_input">Senha:</label>
+                        <input id="password_input" type="password" placeholder="Sua senha">
+                    </div>
+
+                    <button class="botao" type="submit">Entrar</button>
+
+                    <span>Ainda não tem conta? <a href="cadastro.html">Criar conta</a></span>
+                </form>
+
+                <div id="div_aguardar" style="display: none;">Carregando...</div>
+                <div id="div_erros_login"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    var maxAttempts = 3;
+    
+    function enter() {
+        if (maxAttempts <= 0) {
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Número máximo de tentativas atingido.";
+            return false;
+        }
+        aguardar();
+        
+        var emailVar = email_input.value.trim();
+        var passwordVar = password_input.value;
+
+        console.log("FORM LOGIN: ", emailVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                passwordServer: passwordVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO enter()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+
+                    setTimeout(function () {
+                        window.location = "./dashboard/cards.html";
+                    }, 1000); // apenas para exibir o loading
+                    
+                });
+
+            } else {
+                maxAttempts--;
+                if (maxAttempts <= 0) {
+                    cardErro.style.display = "block";
+                    mensagem_erro.innerHTML = "Número máximo de tentativas atingido.";
+                } else {
+                    if (emailVar == "") {
+                        alert("Email está vazio, preencha o campo.");
+                        cardErro.style.display = "block";
+                        mensagem_erro.innerHTML = `Email está vazio, preencha o campo. Resta(m) ${maxAttempts} tentativa(s).`;
+                    }
+                    else if (passwordVar == "") {
+                        cardErro.style.display = "block";
+                        mensagem_erro.innerHTML = `Senha está vazia, preencha o campo. Resta(m) ${maxAttempts} tentativa(s).`;
+                    }
+                }
+                console.log("Houve um erro ao tentar realizar o login!");
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizarAguardar(texto);
+                });
+            }
+        }).catch(function (erro) {
+            console.log(erro);
+            finalizarAguardar("Não foi possível conectar ao servidor. Tente novamente.");
+        })
+        return false;
+    }
+    
+    function sumirMensagem() {
+        cardErro.style.display = "none"
+    }
+</script>

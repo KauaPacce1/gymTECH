@@ -1,0 +1,528 @@
+/* gymTECH | Página inicial */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #050507;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h2 {
+    font-size: 36px;
+}
+
+h3 {
+    font-size: 18px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: #a1a1aa;
+}
+
+/* Botões */
+
+.btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.btn-purple { background: #7c3aed; }
+.btn-black { background: #000; }
+.btn-dark { border: 1px solid #2a2a33; }
+
+/* Cabeçalho e rodapé */
+
+.header {
+    padding: 20px 0;
+}
+
+.header .container,
+.footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.titulo span {
+    color: #a78bfa;
+}
+
+.navbar {
+    display: flex;
+    gap: 28px;
+    color: #a1a1aa;
+    font-size: 14px;
+}
+
+.auth {
+    display: flex;
+    gap: 12px;
+}
+
+.footer {
+    padding: 28px 0;
+    border-top: 1px solid #14141a;
+}
+
+.footer .container {
+    color: #a1a1aa;
+    font-size: 13px;
+}
+
+.footer .titulo {
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Banner */
+
+.banner {
+    padding: 50px 0 90px;
+}
+
+.banner .container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.banner-text {
+    flex: 1;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid #3b2a6b;
+    border-radius: 20px;
+    background: #14102a;
+    color: #a78bfa;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.banner h1 {
+    margin: 22px 0;
+    font-size: 56px;
+    line-height: 1.05;
+}
+
+.banner h1 span {
+    display: block;
+    color: #a78bfa;
+}
+
+.lead {
+    color: #a1a1aa;
+    font-size: 18px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+/* Painel de exemplo */
+
+.mockup {
+    position: relative;
+    flex: 1.2;
+    background: #0b0b10;
+    border: 1px solid #1c1c24;
+    border-radius: 14px;
+    box-shadow: 0 0 80px rgba(124, 58, 237, 0.3);
+}
+
+.mockup-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2a2a33;
+}
+
+.url {
+    margin: 0 auto;
+    padding: 4px 40px;
+    border-radius: 6px;
+    background: #1a1a22;
+    color: #a1a1aa;
+    font-size: 11px;
+}
+
+.mockup-main {
+    display: flex;
+    gap: 12px;
+    padding: 4px 14px 22px;
+}
+
+.mockup-side {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.logo-g,
+.side-item {
+    width: 28px;
+    border-radius: 6px;
+}
+
+.logo-g {
+    height: 28px;
+    background: #7c3aed;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+}
+
+.side-item {
+    height: 20px;
+    background: #1a1a22;
+}
+
+.mockup-content {
+    flex: 1;
+}
+
+.mockup-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.mockup-head span {
+    color: #a1a1aa;
+    font-size: 12px;
+}
+
+.stats,
+.mini-panels {
+    display: grid;
+    gap: 10px;
+}
+
+.stats {
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 10px;
+}
+
+.mini-panels {
+    grid-template-columns: 1fr 1fr;
+}
+
+.stat,
+.mini-panel {
+    padding: 10px;
+    border-radius: 8px;
+    background: #12121a;
+}
+
+.stat strong {
+    display: block;
+    font-size: 18px;
+}
+
+.stat span {
+    color: #a1a1aa;
+    font-size: 10px;
+}
+
+.cyan-text {
+    color: #38bdf8;
+}
+
+.mini-panel h4 {
+    margin-bottom: 8px;
+    font-size: 11px;
+}
+
+.float-badge {
+    position: absolute;
+    top: -14px;
+    right: -10px;
+    padding: 6px 12px;
+    border: 1px solid #155e75;
+    border-radius: 20px;
+    background: #0c2a3a;
+    color: #38bdf8;
+    font-size: 12px;
+}
+
+.toast {
+    position: absolute;
+    left: -30px;
+    bottom: -28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid #1c1c24;
+    border-radius: 10px;
+    background: #0d0d12;
+}
+
+.check {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #7c3aed;
+    text-align: center;
+    line-height: 26px;
+    font-size: 13px;
+}
+
+.toast strong {
+    display: block;
+    font-size: 12px;
+}
+
+.toast div span {
+    color: #a1a1aa;
+    font-size: 11px;
+}
+
+/* Calendário */
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+.calendar.big {
+    gap: 8px;
+}
+
+.day {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: #1a1a22;
+}
+
+.day.on { background: #8b5cf6; }
+.day.light { background: #4c2a94; }
+
+/* Barras de volume */
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+}
+
+.label {
+    width: 50px;
+}
+
+.value {
+    width: 22px;
+    text-align: right;
+}
+
+.track {
+    position: relative;
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: #1a1a22;
+    overflow: hidden;
+}
+
+/* faixa recomendada: 10 a 20 séries, de um máximo de 24 */
+.band {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 41.6%;
+    width: 41.6%;
+    background: #2a2a38;
+}
+
+.fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 4px;
+}
+
+.fill.purple { background: #8b5cf6; }
+.fill.cyan { background: #38bdf8; }
+.fill.coral { background: #f87171; }
+
+/* Seções */
+
+.social,
+.panels,
+.exercises {
+    padding: 70px 0;
+}
+
+.boxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.box,
+.panel,
+.exercise {
+    border: 1px solid #1c1c24;
+    border-radius: 12px;
+    background: #0d0d12;
+}
+
+.box,
+.panel {
+    padding: 24px;
+}
+
+.number {
+    color: #a78bfa;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.box h3 {
+    margin: 8px 0;
+}
+
+.box p {
+    color: #a1a1aa;
+    font-size: 14px;
+}
+
+/* Painéis */
+
+.panels {
+    background: #08080c;
+}
+
+.panels .container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 20px;
+}
+
+.panel .subtitle {
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.panel .bar-row {
+    margin-bottom: 16px;
+}
+
+/* Exercícios */
+
+.exercises-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.more {
+    color: #a78bfa;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.exercise {
+    overflow: hidden;
+}
+
+.exercise-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 110px;
+    background: #1a1a22;
+    color: #71717a;
+    font-size: 12px;
+}
+
+.exercise-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.exercise-info {
+    padding: 16px;
+}
+
+.exercise-info h3 {
+    font-size: 16px;
+}
+
+.exercise-info p {
+    margin-top: 4px;
+    color: #38bdf8;
+    font-size: 12px;
+}
+
+/* Chamada final */
+
+.cta {
+    padding-bottom: 60px;
+}
+
+.cta-box {
+    padding: 50px 24px;
+    border-radius: 20px;
+    background: #7c3aed;
+    text-align: center;
+}
+
+.cta-box p {
+    margin: 10px 0 24px;
+}

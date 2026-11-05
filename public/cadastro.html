@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gymTECH | Cadastro</title>
+  <script src="./js/sessao.js"></script>
+  <link rel="stylesheet" href="./css/auth.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+</head>
+<body>
+  <!--header inicio-->
+  <div class="header">
+    <div class="container">
+      <a class="titulo" href="index.html">gym<span>TECH</span></a>
+    </div>
+  </div>
+
+  <!--header fim-->
+  <div class="login">
+    <div class="alerta_erro">
+      <div class="card_erro" id="cardErro">
+        <span id="mensagem_erro"></span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="hero">
+        <span class="eyebrow">Comece hoje</span>
+        <h1>Seu primeiro treino <span>começa aqui.</span></h1>
+        <p class="lead">Crie sua conta e registre sua primeira série em menos de um minuto.</p>
+      </div>
+
+      <div class="card card-cadastro">
+        <h2>Criar conta</h2>
+        <h3>Leva menos de um minuto para começar.</h3>
+
+        <form class="formulario" onsubmit="event.preventDefault(); cadastrar();">
+          <div class="campo">
+            <label for="name_input">Nome:</label>
+            <input id="name_input" type="text" placeholder="Seu nome" />
+          </div>
+
+          <div class="campo">
+            <label for="email_input">E-mail:</label>
+            <input id="email_input" type="email" placeholder="voce@email.com" />
+          </div>
+
+          <div class="campo">
+            <label for="password_input">Senha:</label>
+            <input id="password_input" type="password" placeholder="Mínimo de 8 caracteres" />
+          </div>
+
+          <div class="campo">
+            <label for="confirmPassword_input">Confirmar Senha:</label>
+            <input id="confirmPassword_input" type="password" placeholder="Repita a senha" />
+          </div>
+
+          <div class="campo checkbox-row">
+            <label for="terms_input">Li e aceito os termos de uso</label>
+            <input id="terms_input" type="checkbox" />
+          </div>
+
+          <button class="botao" type="submit">Criar conta</button>
+
+          <span>Já tem conta? <a href="login.html">Entrar</a></span>
+        </form>
+
+        <div id="div_erros_login"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  function cadastrar() {
+    var nameVar = name_input.value.trim();
+    var emailVar = email_input.value.trim();
+    var passwordVar = password_input.value;
+    var confirmPassVar = confirmPassword_input.value;
+    var termsVar = terms_input.checked;
+
+
+    // Verificando se há algum campo em branco
+    if (!emailVar.includes('@') || !emailVar.includes('.')) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Digite um e-mail válido.";
+      finalizarAguardar();
+      return false;
+    }
+    else if (passwordVar.length < 8) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "A senha deve ter no mínimo 8 caracteres.";
+      finalizarAguardar();
+      return false;
+    }
+    else if (passwordVar != confirmPassVar) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "As senhas não coincidem.";
+      finalizarAguardar();
+      return false;
+    }
+    else if (!termsVar) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML = "Você precisa aceitar os termos de uso.";
+      finalizarAguardar();
+      return false;
+    }
+
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nameServer: nameVar,
+        emailServer: emailVar,
+        passwordServer: passwordVar,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>
