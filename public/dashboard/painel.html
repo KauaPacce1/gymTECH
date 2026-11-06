@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gymTECH · Painel</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+    <div class="app">
+        <!-- MENU LATERAL -->
+        <div class="sidebar">
+            <a class="logo" href="../index.html">gym<span>TECH</span></a>
+            <div class="menu">
+                <a href="#" class="menu-item menu-active">Painel</a>
+                <a href="meusTreinos.html" class="menu-item">Meus treinos</a>
+                <a href="#" class="menu-item">Exercícios</a>
+                <a href="../index.html" class="menu-item">Menu</a>
+            </div>
+            <!-- AVATAR -->
+            <div class="user">
+                <div class="avatar avatar-small js-iniciais"></div>
+                <div class="user-info">
+                    <strong class="js-nome"></strong>
+                    <a href="../login.html">Sair</a>
+                </div>
+            </div>
+        </div>
+ 
+        <!-- CONTEÚDO PRINCIPAL-->
+        <div class="content">
+            <p id="mensagemErro" class="erro" hidden>Não foi possível carregar os dados.</p>
+ 
+            <!-- HEADER -->
+            <div class="topbar">
+                <div class="topbar-user">
+                    <div class="avatar js-iniciais"></div>
+                    <div>
+                        <h1>Olá, <span class="js-nome"></span></h1>
+                        <p id="subtitulo" class="muted small"></p>
+                    </div>
+                </div>
+                <a href="#" class="btn">+ Registrar treino</a>
+            </div>
+ 
+            <!-- CARDS -->
+            <div class="stats">
+                <div class="card">
+                    <strong id="statTreinosMes" class="stat-value"></strong>
+                    <span class="muted small">treinos no mês</span>
+                </div>
+                <div class="card">
+                    <strong id="statSeriesSemana" class="stat-value"></strong>
+                    <span class="muted small">séries na semana</span>
+                </div>
+                <div class="card">
+                    <strong id="statSequencia" class="stat-value stat-blue"></strong>
+                    <span class="muted small">de sequência</span>
+                </div>
+            </div>
+ 
+            <!-- GRÁFICOS -->
+            <div class="panels">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Frequência Mensal</h2>
+                        <span class="muted small">Treinos no último mês</span>
+                    </div>
+                    <div class="chart-box">
+                        <canvas id="graficoFrequencia"></canvas>
+                    </div>
+                </div>
+ 
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Volume semanal</h2>
+                        <span class="muted small">séries por grupo muscular</span>
+                    </div>
+                    <p class="muted small">Faixa sombreada: 10 a 20 séries por semana.</p>
+                    <div class="chart-box chart-volume">
+                        <canvas id="graficoVolume"></canvas>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- TREINOS RECENTES -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Treinos recentes</h2>
+                    <a href="meusTreinos.html" class="link">Ver todos</a>
+                </div>
+                <ul id="listaRecentes" class="recent"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    // grafico barras
+    const labelsFrequencia = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+
+    const dataFrequencia = {
+        labels: labelsFrequencia,
+        datasets: [{
+            label: 'Foi treinar ou não',
+            data: [1, 0, 1, 1, 0, 1, 0],
+            borderWidth: 2,
+            backgroundColor: (context) => {
+                const valor = context.raw;
+                if (valor == 1) return '#1C1C1C'; // Preto suave se foi treinar
+                else return '#EDF4F5'; // Branco gelo se não foi treinar 
+            },
+            borderColor: (context) => {
+                const valor = context.raw;
+                if (valor == 1) return '#1C1C1C'; // Preto suave se foi treinar
+                else return '#EDF4F5'; // Branco gelo se não foi treinar 
+            }
+        }]
+    };
+
+    const configFrequencia = {
+        type: 'line',
+        data: dataFrequencia,
+        options: {
+            plugins: {
+                legend: {display: false} // Esconde quadradinho de legenda
+            }
+        },
+        callback: function(value) {
+            if (value == 0) return 'Não treinou';
+            if (value == 1) return 'Treinou';
+        } 
+    };
+
+    const graficoFrequencia = new Chart(
+        document.getElementById('graficoFrequencia'),
+        configFrequencia
+    );
+
+    // gráfico horizontal
+    const labelsVolume = ['Peito', 'Costas', 'Ombros', 'Pernas', 'Bíceps', 'Tríceps'];
+
+    const dataVolume = {
+        labels: labelsVolume,
+        datasets: [{
+            label: 'Séries na semana',
+            data: [12, 28, 10, 14, 22, 3], 
+            barThickness: 10, // Grossura da barra
+            borderRadius: 5,  // Arredonda as pontas
+            backgroundColor: (context) => {
+                const valor = context.raw;
+                if (valor < 8) return '#7F00FF'; // Roxo violeta (Abaixo de 8)
+                if (valor > 20) return '#a855f7'; // Roxo (Acima de 20)
+                return '#D3D3FF';                // Lavanda (Entre 8 e 20)
+            }
+        }]
+    };
+
+    const configVolume = {
+        type: 'bar',
+        data: dataVolume,
+        options: {
+            indexAxis: 'y', // transforma em barras horizontais
+            plugins: {
+                legend: {display: false} // Esconde quadradinho de legenda
+            }
+        }
+    };
+
+    const graficoVolume = new Chart(
+        document.getElementById('graficoVolume'),
+        configVolume
+    )
+</script>

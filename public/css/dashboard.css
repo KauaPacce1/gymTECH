@@ -1,0 +1,223 @@
+/* gymTECH | DASHBOARD */
+
+:root {                      
+  --bg: #050507; /* fundo da página inteira */
+  --surface: #0d0d12; /* fundo dos cards, da caixa do usuário na sidebar e do menu ao passar o mouse */
+  --border: #1d1d26; /* bordas: dos cards, da sidebar, da caixa do usuário e das linhas dos treinos recentes */
+  --text: #ffffff; /* cor do texto principal (branco) e do item do menu ao passar o mouse */
+  --muted: #8b8b99; /* cinza dos textos secundários: "treinos no mês", subtítulo e itens do menu */
+  --purple: #8b5cf6; /* roxo claro: "TECH", item ativo do menu, "Ver todos" e botão ao passar o mouse */
+  --purple-dark: #7c3aed; /* roxo escuro: círculo do avatar e fundo do botão "+ Registrar treino" */
+  --blue: #38bdf8; /* azul: "Sair", número "de sequência" e texto dos exercícios recentes */
+  --red: #fb6a5a; /* vermelho: borda e texto da mensagem de erro */
+  --radius: 16px; /* arredondamento dos cards */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* padding e borda ficam dentro da largura */
+}
+
+body {
+  font-family: sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a  { 
+  color: inherit; 
+  text-decoration: none; 
+}
+ul { 
+  list-style: none; 
+}
+
+.muted { 
+  color: var(--muted); 
+}
+.small { 
+  font-size: 0.85rem; 
+}
+
+.erro {
+  background: rgba(251, 106, 90, 0.12);
+  border: 1px solid var(--red);
+  color: var(--red);
+  padding: 12px 16px;
+  border-radius: 10px;
+}
+
+/* LAYOUT GERAL */
+.app {
+  display: grid;
+  grid-template-columns: 240px 1fr;  
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 16px;
+  border-right: 1px solid var(--border);
+}
+
+.logo { 
+  font-size: 1.5rem; 
+  font-weight: 700; 
+  padding: 0 8px; 
+}
+.logo span { 
+  color: var(--purple); 
+}
+
+.menu { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+}
+
+.menu-item {
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: var(--muted);
+  transition: background 0.2s, color 0.2s;
+}
+.menu-item:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+.menu-active {
+  background: rgba(139, 92, 246, 0.18);
+  color: var(--purple);
+  font-weight: 500;
+}
+
+.user {
+  margin-top: auto;                
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.user-info { 
+  display: flex; 
+  flex-direction: column; 
+  font-size: 0.85rem; 
+}
+.user-info a { 
+  color: var(--blue); 
+}
+
+/* CONTEÚDO, HEADER, AVATAR E BOTÃO */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 32px;
+  min-width: 0;                       
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.topbar-user { 
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+}
+.topbar h1 { 
+  font-size: 1.6rem; 
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0; /* não deixa o círculo achatar */
+  border-radius: 50%;
+  background: var(--purple-dark);
+  display: grid;
+  place-items: center;                
+  font-weight: 700;
+}
+.avatar-small { 
+  width: 36px; 
+  height: 36px; 
+  font-size: 0.8rem; 
+}
+
+.btn {
+  background: var(--purple-dark);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: transform 0.15s, 
+  background 0.2s;
+}
+.btn:hover {
+  background: var(--purple);
+  transform: translateY(-2px);
+}
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+}
+.card-header h2 { 
+  font-size: 1.1rem; 
+}
+
+.link { 
+  color: var(--purple); 
+  font-weight: 700; 
+  font-size: 0.85rem; 
+}
+
+/* CARDS DE NÚMEROS */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);   /* 3 colunas iguais */
+  gap: 16px;
+}
+.stat-value { 
+  display: block; 
+  font-size: 1.7rem; 
+  margin-bottom: 4px; 
+}
+.stat-blue { 
+  color: var(--blue);
+}
+
+/* PAINÉIS LADO A LADO */
+.panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* GRÁFICO */
+/* sem altura o gráfico cresce sem parar */
+.chart-box {
+  position: relative;                 
+  height: 280px;
+}
+.chart-volume { 
+  height: 250px; 
+}     
