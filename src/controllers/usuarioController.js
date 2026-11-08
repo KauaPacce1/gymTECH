@@ -1,92 +1,78 @@
 var usuarioModel = require("../models/usuarioModel");
-var aquarioModel = require("../models/aquarioModel");
 
-function autenticar(req, res) {
+function enter(req, res) {
     var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    var password = req.body.passwordServer;
 
-    if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
-        res.status(400).send("Sua senha está indefinida!");
-    } else {
-
-        usuarioModel.autenticar(email, senha)
-            .then(
-                function (resultadoAutenticar) {
-                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
-                    if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].id,
-                                        email: resultadoAutenticar[0].email,
-                                        name: resultadoAutenticar[0].name,
-                                        password: resultadoAutenticar[0].password,
-                                        aquarios: resultadoAquarios
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
-                    } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
-                    } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+    if (typeof email !== "string" || email.trim() === "") {
+        return res.status(400).json({ message: "Preencha o e-mail." });
+    }
+    if (typeof password !== "string" || password === "") {
+        return res.status(400).json({ message: "Preencha a senha." });
+    }
+    if (email.trim().length > 100 || password.length > 45) {
+        return res.status(400).json({ message: "E-mail ou senha excede o tamanho permitido." });
     }
 
+    return usuarioModel.enter(email.trim(), password)
+        .then(function (users) {
+            if (users.length === 1) {
+                res.json({ id: users[0].id, name: users[0].name, email: users[0].email });
+            } else if (users.length === 0) {
+                res.status(403).json({ message: "E-mail e/ou senha inválidos." });
+            } else {
+                res.status(403).json({ message: "Mais de um usuário com o mesmo login e senha." });
+            }
+        })
+        .catch(function (error) {
+            console.error("Erro ao realizar o login:", error.code || "Erro de conexão com o banco.");
+            res.status(500).json({ message: "Não foi possível realizar o login. Tente novamente." });
+        });
 }
 
-function cadastrar(req, res) {
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
-    var name = req.body.nomeServer;
+function register(req, res) {
+    var name = req.body.nameServer;
     var email = req.body.emailServer;
-    var password = req.body.senhaServer;
-    
+    var password = req.body.passwordServer;
 
-    // Faça as validações dos valores
-    if (name == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (password == undefined) {
-        res.status(400).send("Sua senha está undefined!");
-    }  else {
-
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(name, email, password)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+    if (typeof name !== "string" || name.trim() === "") {
+        return res.status(400).json({ message: "Preencha seu nome." });
     }
+    if (name.trim().length > 45) {
+        return res.status(400).json({ message: "O nome deve ter no máximo 45 caracteres." });
+    }
+    if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+        return res.status(400).json({ message: "Digite um e-mail válido." });
+    }
+    if (typeof password !== "string" || password.length < 8) {
+        return res.status(400).json({ message: "A senha deve ter no mínimo 8 caracteres." });
+    }
+    if (email.trim().length > 100) {
+        return res.status(400).json({ message: "O e-mail deve ter no máximo 100 caracteres." });
+    }
+    if (password.length > 45) {
+        return res.status(400).json({ message: "A senha deve ter no máximo 45 caracteres." });
+    }
+
+    return usuarioModel.register(name.trim(), email.trim(), password)
+        .then(function (result) {
+            res.status(201).json({
+                id: result.insertId,
+                name: name.trim(),
+                email: email.trim(),
+                message: "Cadastro realizado com sucesso!"
+            });
+        })
+        .catch(function (error) {
+            console.error("Erro ao realizar o cadastro:", error.code || "Erro de conexão com o banco.");
+            if (error.code === "ER_DUP_ENTRY") {
+                return res.status(409).json({ message: "Este e-mail já está cadastrado." });
+            }
+            res.status(500).json({ message: "Não foi possível realizar o cadastro. Tente novamente." });
+        });
 }
 
 module.exports = {
-    autenticar,
-    cadastrar
-}
+    enter,
+    register
+};
