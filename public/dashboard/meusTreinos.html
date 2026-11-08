@@ -29,57 +29,6 @@
     </div>
 
     <div class="works-wrapper">
-        <div class="btn-wrapper">
-            <button class="registerWork" onclick="openModalWork()">
-                Registrar treino
-            </button>
-        </div>
-
-    <!-- MODAL DE CADASTRO DE TREINOS -->
-    <div id="modal_work" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div>
-                    <h2>Registrar treino</h2>
-                    <p>Preencha os dados do seu treino.</p>
-                </div>
-                <button class="btn-fechar" onclick="closeModalWork()" aria-label="Fechar modal">
-                    ×
-                </button>
-            </div>
-            <div class="form">
-                <label for="ipt_nameExerc">Nome do exercicio</label>
-                <input type="text" id="ipt_nameExerc" placeholder="Ex.: Supino Inclinado">
-
-                <label for="ipt_typeMusc">Qual grupo muscular esse exercicio foca</label>
-                <select id="ipt_typeMusc">
-                    <option value="peito">Peito</option>
-                    <option value="costas">Costas</option>
-                    <option value="ombros">Ombros</option>
-                    <option value="pernas">Pernas</option>
-                    <option value="biceps">Biceps</option>
-                    <option value="triceps">Triceps</option>
-                </select>
-
-                <label for="ipt_qtdSets">Quantidade de series</label>
-                <input type="number" id="ipt_qtdSets" placeholder="Ex.: 3">
-
-                <label for="ipt_dateWork">Data do treino</label>
-                <input type="date" id="ipt_dateWork" placeholder="10/08/2006">
-
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn-cancel" onclick="closeModalWork()">
-                    Cancelar
-                </button>
-
-                <button class="btn-confirm" onclick="registerWork()">
-                    Registrar treino
-                </button>
-            </div>
-
- 
         <!-- CONTEÚDO PRINCIPAL-->
         <div class="content">
             <p id="mensagemErro" class="erro" hidden>Não foi possível carregar os dados.</p>
@@ -105,18 +54,104 @@
             </div>
         </div>
     </div>
-</body>
-</html>
-<script>
+    </div>
+
+    <!-- MODAL DE CADASTRO DE TREINOS -->
+    <div id="modal_work" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2>Registrar treino</h2>
+                    <p class="muted small">Preencha os dados do seu treino.</p>
+                </div>
+                <button type="button" class="btn-fechar" onclick="closeModalWork()" aria-label="Fechar modal">
+                    ×
+                </button>
+            </div>
+
+            <form class="form" onsubmit="event.preventDefault(); registerWork();">
+                <div class="form-field">
+                    <label for="ipt_nameExerc">Nome do exercício</label>
+                    <input type="text" id="ipt_nameExerc" placeholder="Ex.: Supino inclinado" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="ipt_typeMusc">Grupo muscular</label>
+                    <select id="ipt_typeMusc" required>
+                        <option value="" disabled selected>Selecione um grupo</option>
+                        <option value="peito">Peito</option>
+                        <option value="costas">Costas</option>
+                        <option value="ombros">Ombros</option>
+                        <option value="pernas">Pernas</option>
+                        <option value="biceps">Bíceps</option>
+                        <option value="triceps">Tríceps</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="ipt_qtdSets">Quantidade de séries</label>
+                    <input type="number" id="ipt_qtdSets" placeholder="Ex.: 3" min="1" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="ipt_dateWork">Data do treino</label>
+                    <input type="date" id="ipt_dateWork" required>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-cancel" onclick="closeModalWork()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-confirm">
+                        Registrar treino
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
     // ABRIR E FECHAR OS MODAIS
         function openModalWork() {
-            modal_mercado.style.display = "flex";
+            modal_work.style.display = "flex";
         }
 
         function closeModalWork() {
-            modal_mercado.style.display = "none";
+            modal_work.style.display = "none";
         }
 
 
-        let works = [];
-</script>
+        var works = [];
+
+        function registerWork() {
+            var name = ipt_nameExerc.value.trim();
+            var typeMusc = ipt_typeMusc.value.trim();
+            var qtdSets = Number(ipt_qtdSets.value.trim());
+            var date = ipt_dateWork.value.trim();
+
+            var Valid = true;
+
+            if (name == "" || typeMusc == "" ||
+                qtdSets <= 0 || date == ""){
+                alert("Preencha todos os campos corretamente.");
+                isValid = false;
+            }
+
+            if (Valid) {
+
+                var newWork = {
+                    id: works.length + 1,
+                    name: name,
+                    typeMusc: typeMusc,
+                    qtdSets: qtdSets,
+                    date: date
+                };
+
+                works.push(newWork);
+
+                closeModalWork();
+            }
+        }
+    </script>
+</body>
+</html>
