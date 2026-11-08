@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gymTECH · Painel</title>
-    <script src="../js/sessao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
-<body onload="validarSessao();">
+<body>
+    <!-- MENU LATERAL -->
     <div class="app">
-        <!-- MENU LATERAL -->
         <div class="sidebar">
             <a class="logo" href="../index.html">gym<span>TECH</span></a>
             <div class="menu">
@@ -19,12 +18,13 @@
                 <a href="#" class="menu-item">Exercícios</a>
                 <a href="../index.html" class="menu-item">Menu</a>
             </div>
+            
             <!-- AVATAR -->
             <div class="user">
                 <div class="avatar avatar-small js-iniciais"></div>
                 <div class="user-info">
                     <strong class="js-nome"></strong>
-                    <a href="../login.html" onclick="limparSessao(); return false;">Sair</a>
+                    <a href="../login.html">Sair</a>
                 </div>
             </div>
         </div>
@@ -42,9 +42,9 @@
                         <p id="subtitulo" class="muted small"></p>
                     </div>
                 </div>
-                <a href="#" class="btn">+ Registrar treino</a>
+                <a href="meusTreinos.html" class="btn">+ Registrar treino</a>
             </div>
- 
+    
             <!-- CARDS -->
             <div class="stats">
                 <div class="card">

@@ -1,11 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>gymTECH · Treinos</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
+    <!-- MENU LATERAL -->
+    <div class="app">
+    <div class="sidebar">
+    <a class="logo" href="../index.html">gym<span>TECH</span></a>
+    <div class="menu">
+        <a href="painel.html" class="menu-item menu-active">Painel</a>
+        <a href="#" class="menu-item">Meus treinos</a>
+        <a href="#" class="menu-item">Exercícios</a>
+        <a href="../index.html" class="menu-item">Menu</a>
+    </div>
     
+    <!-- AVATAR -->
+    <div class="user">
+        <div class="avatar avatar-small js-iniciais"></div>
+        <div class="user-info">
+            <strong class="js-nome"></strong>
+            <a href="../login.html">Sair</a>
+        </div>
+    </div>
+    </div>
+
+    <div class="works-wrapper">
+        <div class="btn-wrapper">
+            <button class="registerWork" onclick="openModalWork()">
+                Registrar treino
+            </button>
+        </div>
+
+    <!-- MODAL DE CADASTRO DE TREINOS -->
+    <div id="modal_work" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2>Registrar treino</h2>
+                    <p>Preencha os dados do seu treino.</p>
+                </div>
+                <button class="btn-fechar" onclick="closeModalWork()" aria-label="Fechar modal">
+                    ×
+                </button>
+            </div>
+            <div class="form">
+                <label for="ipt_nameExerc">Nome do exercicio</label>
+                <input type="text" id="ipt_nameExerc" placeholder="Ex.: Supino Inclinado">
+
+                <label for="ipt_typeMusc">Qual grupo muscular esse exercicio foca</label>
+                <select id="ipt_typeMusc">
+                    <option value="peito">Peito</option>
+                    <option value="costas">Costas</option>
+                    <option value="ombros">Ombros</option>
+                    <option value="pernas">Pernas</option>
+                    <option value="biceps">Biceps</option>
+                    <option value="triceps">Triceps</option>
+                </select>
+
+                <label for="ipt_qtdSets">Quantidade de series</label>
+                <input type="number" id="ipt_qtdSets" placeholder="Ex.: 3">
+
+                <label for="ipt_dateWork">Data do treino</label>
+                <input type="date" id="ipt_dateWork" placeholder="10/08/2006">
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="closeModalWork()">
+                    Cancelar
+                </button>
+
+                <button class="btn-confirm" onclick="registerWork()">
+                    Registrar treino
+                </button>
+            </div>
+
+ 
+        <!-- CONTEÚDO PRINCIPAL-->
+        <div class="content">
+            <p id="mensagemErro" class="erro" hidden>Não foi possível carregar os dados.</p>
+ 
+            <!-- HEADER -->
+            <div class="topbar">
+                <div class="topbar-user">
+                    <div class="avatar js-iniciais"></div>
+                    <div>
+                        <h1>Aqui está os seus treinos, <span class="js-nome"></span></h1>
+                        <p id="subtitulo" class="muted small"></p>
+                    </div>
+                </div>
+                <a class="btn" onclick="openModalWork()">+ Registrar treino</a>
+            </div>
+ 
+            <!-- TREINOS RECENTES -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Treinos recentes</h2>
+                </div>
+                <ul id="listaRecentes" class="recent"></ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+<script>
+    // ABRIR E FECHAR OS MODAIS
+        function openModalWork() {
+            modal_mercado.style.display = "flex";
+        }
+
+        function closeModalWork() {
+            modal_mercado.style.display = "none";
+        }
+
+
+        let works = [];
+</script>
