@@ -6,6 +6,7 @@
     <title>gymTECH · Painel</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.6.1/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../js/sessao.js"></script>
 </head>
 <body>
     <!-- MENU LATERAL -->
@@ -14,9 +15,9 @@
             <a class="logo" href="../index.html">gym<span>TECH</span></a>
             <div class="menu">
                 <a href="#" class="menu-item menu-active">Painel</a>
-                <a href="meusTreinos.html" class="menu-item">Meus treinos</a>
-                <a href="#" class="menu-item">Exercícios</a>
-                <a href="../index.html" class="menu-item">Menu</a>
+                <a href="meusTreinos.html" class="menu-item menu-active">Meus treinos</a>
+                <a href="#" class="menu-item menu-active">Exercícios</a>
+                <a href="../index.html" class="menu-item menu-active">Menu</a>
             </div>
             
             <!-- AVATAR -->
@@ -24,7 +25,7 @@
                 <div class="avatar avatar-small js-iniciais"></div>
                 <div class="user-info">
                     <strong class="js-nome"></strong>
-                    <a href="../login.html">Sair</a>
+                    <a href="../login.html" onclick="limparSessao()">Sair</a>
                 </div>
             </div>
         </div>
@@ -38,7 +39,7 @@
                 <div class="topbar-user">
                     <div class="avatar js-iniciais"></div>
                     <div>
-                        <h1>Olá, <span class="js-nome"></span></h1>
+                        <h1>Olá, <span class="js-nome"></span> !</h1>
                         <p id="subtitulo" class="muted small"></p>
                     </div>
                 </div>
@@ -98,6 +99,8 @@
 </body>
 </html>
 <script>
+    validarSessao()
+
     // grafico barras
     const labelsFrequencia = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 

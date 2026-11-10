@@ -1,59 +1,62 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gymTECH · Treinos</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="../js/sessao.js"></script>
 </head>
+
 <body>
     <!-- MENU LATERAL -->
     <div class="app">
-    <div class="sidebar">
-    <a class="logo" href="../index.html">gym<span>TECH</span></a>
-    <div class="menu">
-        <a href="painel.html" class="menu-item menu-active">Painel</a>
-        <a href="#" class="menu-item">Meus treinos</a>
-        <a href="#" class="menu-item">Exercícios</a>
-        <a href="../index.html" class="menu-item">Menu</a>
-    </div>
-    
-    <!-- AVATAR -->
-    <div class="user">
-        <div class="avatar avatar-small js-iniciais"></div>
-        <div class="user-info">
-            <strong class="js-nome"></strong>
-            <a href="../login.html">Sair</a>
-        </div>
-    </div>
-    </div>
+        <div class="sidebar">
+            <a class="logo" href="../index.html">gym<span>TECH</span></a>
+            <div class="menu">
+                <a href="painel.html" class="menu-item menu-active">Painel</a>
+                <a href="#" class="menu-item menu-active">Meus treinos</a>
+                <a href="#" class="menu-item menu-active">Exercícios</a>
+                <a href="../index.html" class="menu-item menu-active">Menu</a>
+            </div>
 
-    <div class="works-wrapper">
-        <!-- CONTEÚDO PRINCIPAL-->
-        <div class="content">
-            <p id="mensagemErro" class="erro" hidden>Não foi possível carregar os dados.</p>
- 
-            <!-- HEADER -->
-            <div class="topbar">
-                <div class="topbar-user">
-                    <div class="avatar js-iniciais"></div>
-                    <div>
-                        <h1>Aqui está os seus treinos, <span class="js-nome"></span></h1>
-                        <p id="subtitulo" class="muted small"></p>
-                    </div>
+            <!-- AVATAR -->
+            <div class="user">
+                <div class="avatar avatar-small js-iniciais"></div>
+                <div class="user-info">
+                    <strong class="js-nome"></strong>
+                    <a href="../login.html" onclick="limparSessao()">Sair</a>
                 </div>
-                <a class="btn" onclick="openModalWork()">+ Registrar treino</a>
-            </div>
- 
-            <!-- TREINOS RECENTES -->
-            <div class="card">
-                <div class="card-header">
-                    <h2>Treinos recentes</h2>
-                </div>
-                <ul id="listaRecentes" class="recent"></ul>
             </div>
         </div>
-    </div>
+
+        <div class="works-wrapper">
+            <!-- CONTEÚDO PRINCIPAL-->
+            <div class="content">
+                <p id="mensagemErro" class="erro" hidden>Não foi possível carregar os dados.</p>
+
+                <!-- HEADER -->
+                <div class="topbar">
+                    <div class="topbar-user">
+                        <div class="avatar js-iniciais"></div>
+                        <div>
+                            <h1>Aqui estão os seus treinos, <span class="js-nome"></span> !</h1>
+                            <p id="subtitulo" class="muted small"></p>
+                        </div>
+                    </div>
+                    <a class="btn" onclick="openModalWork()">+ Registrar treino</a>
+                </div>
+
+                <!-- TREINOS RECENTES -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Treinos recentes</h2>
+                    </div>
+                    <ul id="listaRecentes" class="recent"></ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- MODAL DE CADASTRO DE TREINOS -->
@@ -109,9 +112,10 @@
             </form>
         </div>
     </div>
-
     <script>
-    // ABRIR E FECHAR OS MODAIS
+        validarSessao()
+
+        // ABRIR E FECHAR OS MODAIS
         function openModalWork() {
             modal_work.style.display = "flex";
         }
@@ -124,6 +128,7 @@
         var works = [];
 
         function registerWork() {
+            var userId = sessionStorage.getItem("userId");
             var name = ipt_nameExerc.value.trim();
             var typeMusc = ipt_typeMusc.value.trim();
             var qtdSets = Number(ipt_qtdSets.value.trim());
@@ -131,27 +136,79 @@
 
             var Valid = true;
 
-            if (name == "" || typeMusc == "" ||
-                qtdSets <= 0 || date == ""){
+            if (name == "" || typeMusc == "" || qtdSets <= 0 || date == "") {
                 alert("Preencha todos os campos corretamente.");
-                isValid = false;
+                Valid = false;
             }
 
             if (Valid) {
-
-                var newWork = {
-                    id: works.length + 1,
-                    name: name,
-                    typeMusc: typeMusc,
-                    qtdSets: qtdSets,
-                    date: date
-                };
-
-                works.push(newWork);
-
-                closeModalWork();
+                fetch("/workouts/" + userId, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        muscleGroup: typeMusc,
+                        sets: qtdSets,
+                        date: date
+                    })
+                }).then(function (response) {
+                    if (response.ok) {
+                        alert("Treino registrado com sucesso!");
+                        closeModalWork();
+                        loadWorkouts();
+                    } else {
+                        alert("Não foi possível registrar o treino.");
+                    }
+                }).catch(function (error) {
+                    console.error(error);
+                    alert("Não foi possível conectar ao servidor.");
+                });
             }
+        }
+
+        function loadWorkouts() {
+            var userId = sessionStorage.getItem("userId");
+
+            fetch("/workouts/" + userId)
+                .then(function (response) {
+                    if (response.ok) {
+                        return response.json().then(function (data) {
+                            works = data;
+
+                            var list = document.getElementById("listaRecentes");
+                            list.innerHTML = "";
+
+                            if (works.length == 0) {
+                                list.textContent = "Você ainda não registrou treinos.";
+                            }
+
+                            for (var i = 0; i < works.length; i++) {
+                                var item = document.createElement("li");
+
+                                item.textContent =
+                                    works[i].name + " - " +
+                                    works[i].sets + " séries - " +
+                                    works[i].date;
+
+                                list.appendChild(item);
+                            }
+                        });
+                    } else {
+                        alert("Não foi possível buscar os treinos.");
+                    }
+                })
+                .catch(function (error) {
+                    console.error(error);
+                    alert("Não foi possível carregar os treinos.");
+                });
+        }
+
+        if (sessionStorage.getItem("userId")) {
+            loadWorkouts();
         }
     </script>
 </body>
+
 </html>

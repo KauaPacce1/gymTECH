@@ -88,26 +88,22 @@
       cardErro.style.display = "block";
       mensagem_erro.textContent = "Preencha seu nome.";
       return false;
-    }
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVar)) {
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVar)) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "Digite um e-mail válido.";
       finalizarAguardar();
       return false;
-    }
-    else if (passwordVar.length < 8) {
+    } else if (passwordVar.length < 8) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "A senha deve ter no mínimo 8 caracteres.";
       finalizarAguardar();
       return false;
-    }
-    else if (passwordVar != confirmPasswordVar) {
+    } else if (passwordVar != confirmPasswordVar) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "As senhas não coincidem.";
       finalizarAguardar();
       return false;
-    }
-    else if (!termsVar) {
+    } else if (!termsVar) {
       cardErro.style.display = "block";
       mensagem_erro.innerHTML = "Você precisa aceitar os termos de uso.";
       finalizarAguardar();
