@@ -17,7 +17,7 @@
             <div class="menu">
                 <a href="painel.html" class="menu-item menu-active">Painel</a>
                 <a href="#" class="menu-item menu-active">Meus treinos</a>
-                <a href="#" class="menu-item menu-active">Exercícios</a>
+                <a href="../exercicios.html" class="menu-item menu-active">Exercícios</a>
                 <a href="../index.html" class="menu-item menu-active">Menu</a>
             </div>
 
@@ -41,7 +41,7 @@
                     <div class="topbar-user">
                         <div class="avatar js-iniciais"></div>
                         <div>
-                            <h1>Histórico de treinos <span class="js-nome"></span></h1>
+                            <h1>Aqui estão os seus treinos, <span class="js-nome"></span></h1>
                             <p id="subtitulo" class="muted small"></p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
 
                 <!-- TREINOS RECENTES -->
                 <section>
-                    <h2>Histórico de treinos</h2>
+                    <h2>Histórico de treinos</h2><br>
                     <div id="workoutHistory" class="workout-history"></div>
                 </section>
             </div>
@@ -125,16 +125,57 @@
 
         var works = [];
 
+        function renderWorkouts() {
+            var history = document.getElementById("workoutHistory");
+            history.innerHTML = "";
+
+            if (works.length == 0) {
+                history.textContent = "Você ainda não registrou treinos.";
+                return;
+            }
+
+            var currentDate = "";
+            var list;
+
+            for (var i = 0; i < works.length; i++) {
+                // Se mudou o dia, criar outro card.
+                if (works[i].date != currentDate) {
+                    currentDate = works[i].date;
+
+                    var card = document.createElement("div");
+                    card.className = "card workout-card";
+
+                    var title = document.createElement("h3");
+                    title.textContent = currentDate;
+
+                    list = document.createElement("ul");
+                    list.className = "workout-list";
+
+                    card.appendChild(title);
+                    card.appendChild(list);
+                    history.appendChild(card);
+                }
+
+                // Colocar o exercício no card desse dia.
+                var item = document.createElement("li");
+                item.textContent =
+                    works[i].name + " - " +
+                    works[i].sets + " séries";
+
+                list.appendChild(item);
+            }
+        }
+
         function registerWork() {
             var userId = sessionStorage.getItem("userId");
             var name = ipt_nameExerc.value.trim();
-            var typeMusc = ipt_typeMusc.value.trim();
-            var qtdSets = Number(ipt_qtdSets.value.trim());
+            var muscleGroup = ipt_typeMusc.value.trim();
+            var sets = Number(ipt_qtdSets.value.trim());
             var date = ipt_dateWork.value.trim();
 
             var Valid = true;
 
-            if (name == "" || typeMusc == "" || qtdSets <= 0 || date == "") {
+            if (name == "" || muscleGroup == "" || sets <= 0 || date == "") {
                 alert("Preencha todos os campos corretamente.");
                 Valid = false;
             }
@@ -147,8 +188,8 @@
                     },
                     body: JSON.stringify({
                         name: name,
-                        muscleGroup: typeMusc,
-                        sets: qtdSets,
+                        muscleGroup: muscleGroup,
+                        sets: sets,
                         date: date
                     })
                 }).then(function (response) {
@@ -174,24 +215,7 @@
                     if (response.ok) {
                         return response.json().then(function (data) {
                             works = data;
-
-                            var list = document.getElementById("listaRecentes");
-                            list.innerHTML = "";
-
-                            if (works.length == 0) {
-                                list.textContent = "Você ainda não registrou treinos.";
-                            }
-
-                            for (var i = 0; i < works.length; i++) {
-                                var item = document.createElement("li");
-
-                                item.textContent =
-                                    works[i].name + " - " +
-                                    works[i].sets + " séries - " +
-                                    works[i].date;
-
-                                list.appendChild(item);
-                            }
+                            renderWorkouts();
                         });
                     } else {
                         alert("Não foi possível buscar os treinos.");
