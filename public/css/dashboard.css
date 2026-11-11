@@ -340,3 +340,25 @@ ul {
 .btn-cancel:hover {
   background: var(--border);
 }
+
+/* HISTÓRICO DE TREINOS */
+.workout-card {
+  margin-bottom: 16px;
+}
+
+.workout-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.workout-list {
+  margin-top: 12px;
+}
+
+.workout-list li {
+  padding: 12px 0;
+}
+
+.workout-list li + li {
+  border-top: 1px solid var(--border);
+}
