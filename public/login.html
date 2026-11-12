@@ -53,7 +53,6 @@
                 </form>
 
                 <div id="div_aguardar" style="display: none;">Carregando...</div>
-                <div id="div_erros_login"></div>
             </div>
         </div>
     </div>
@@ -62,20 +61,19 @@
 </html>
 <script>
     var maxAttempts = 3;
-    
+
     function enter() {
-        sumirMensagem();
-        if (maxAttempts <= 0) {
-            cardErro.style.display = "block";
-            mensagem_erro.innerHTML = "Número máximo de tentativas atingido.";
-            return false;
-        }
+        clearMessage();
+
         var emailVar = email_input.value.trim();
         var passwordVar = password_input.value;
 
-        if (emailVar === "" || passwordVar === "") {
-            cardErro.style.display = "block";
-            mensagem_erro.textContent = "Preencha o e-mail e a senha.";
+        if (maxAttempts <= 0) {
+            showError("Número máximo de tentativas atingido.");
+            return false;
+        }
+        if (emailVar == "" || passwordVar == "") {
+            showError("Preencha o e-mail e a senha.");
             return false;
         }
 
@@ -91,34 +89,33 @@
                 passwordServer: passwordVar
             })
         }).then(function (response) {
-            return response.json().then(function (data) {
-                if (!response.ok) {
-                    if (response.status === 403) {
-                        maxAttempts--;
-                        throw new Error(maxAttempts <= 0
-                            ? "Número máximo de tentativas atingido."
-                            : data.message + " Resta(m) " + maxAttempts + " tentativa(s).");
-                    }
-                    throw new Error(data.message || "Não foi possível realizar o login.");
-                }
+            if (response.ok) {
+                response.json().then(function (json) {
+                    sessionStorage.setItem("userEmail", json.email);
+                    sessionStorage.setItem("userName", json.name);
+                    sessionStorage.setItem("userId", json.id);
+                    window.location = "./dashboard/painel.html";
+                });
+            } else {
+                maxAttempts--;
 
-                sessionStorage.clear();
-                sessionStorage.setItem("userEmail", data.email);
-                sessionStorage.setItem("userName", data.name);
-                sessionStorage.setItem("userId", data.id);
-                document.getElementById("loginForm").reset();
+                if (maxAttempts <= 0) {
+                    showError("Número máximo de tentativas atingido.");
+                } else {
+                    showError("E-mail ou senha incorretos. Restam " + maxAttempts + " tentativa(s).");
+                }
                 finalizarAguardar();
-                window.location = "./dashboard/painel.html";
-            });
-        }).catch(function (error) {
-            console.error("Erro no login:", error.message);
-            finalizarAguardar(error.message || "Não foi possível conectar ao servidor. Tente novamente.");
+            }
         });
         return false;
     }
-    
-    function sumirMensagem() {
+
+    function showError(text) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = text;
+    }
+
+    function clearMessage() {
         cardErro.style.display = "none";
-        document.getElementById("div_erros_login").textContent = "";
     }
 </script>
