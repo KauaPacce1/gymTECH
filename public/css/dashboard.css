@@ -16,11 +16,11 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* padding e borda ficam dentro da largura */
+  box-sizing: border-box;
 }
 
 body {
-  font-family: sans-serif;
+  font-family: Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
 }

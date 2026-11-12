@@ -67,7 +67,6 @@
         </form>
 
         <div id="div_aguardar" style="display: none;">Carregando...</div>
-        <div id="div_erros_login"></div>
       </div>
     </div>
   </div>
@@ -82,31 +81,22 @@
     var termsVar = terms_input.checked;
 
 
-    sumirMensagem();
+    clearMessage();
 
-    if (nameVar === "") {
-      cardErro.style.display = "block";
-      mensagem_erro.textContent = "Preencha seu nome.";
+    if (nameVar == "") {
+      showError("Preencha seu nome.");
       return false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVar)) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = "Digite um e-mail válido.";
-      finalizarAguardar();
+    } else if (!emailVar.includes('@') || !emailVar.includes('.')) {
+      showError("Digite um e-mail válido.");
       return false;
     } else if (passwordVar.length < 8) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = "A senha deve ter no mínimo 8 caracteres.";
-      finalizarAguardar();
+      showError("A senha deve conter no mínimo 8 caracteres.");
       return false;
     } else if (passwordVar != confirmPasswordVar) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = "As senhas não coincidem.";
-      finalizarAguardar();
+      showError("As senhas não coincidem.");
       return false;
     } else if (!termsVar) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML = "Você precisa aceitar os termos de uso.";
-      finalizarAguardar();
+      showError("Você precisa aceitar os termos de uso.");
       return false;
     }
 
@@ -125,34 +115,25 @@
       }),
     })
       .then(function (response) {
-        return response.json().then(function (data) {
-          if (!response.ok) {
-            throw new Error(data.message || "Não foi possível realizar o cadastro.");
-          }
-          cardErro.style.display = "block";
-
-          mensagem_erro.textContent =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(function () {
-            window.location = "login.html";
-          }, 2000);
-
+        if (response.ok) {
           limparFormulario();
+          showError("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+          setTimeout(function () { window.location = "login.html"; }, 2000);
+        } else {
+          showError("Não foi possível realizar o cadastro.");
           finalizarAguardar();
-        });
-      })
-      .catch(function (error) {
-        console.error("Erro no cadastro:", error.message);
-        finalizarAguardar(error.message || "Não foi possível conectar ao servidor.");
+        }
       });
-
     return false;
   }
 
-  function sumirMensagem() {
+  function showError(text) {
+    cardErro.style.display = "block";
+    mensagem_erro.innerHTML = text;
+  }
+
+  function clearMessage() {
     cardErro.style.display = "none";
-    document.getElementById("div_erros_login").textContent = "";
   }
 
   function limparFormulario() {
