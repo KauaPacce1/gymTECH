@@ -11,6 +11,9 @@ body {
     color: #fff;
     font-family: Arial, sans-serif;
     line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 ul {
@@ -54,7 +57,7 @@ h3 {
 .btn-black { background: #000; }
 .btn-dark { border: 1px solid #2a2a33; }
 
-/* Cabeçalho e rodapé */
+/* Cabeçalho e footer */
 
 .header {
     padding: 20px 0;
@@ -89,6 +92,7 @@ h3 {
 }
 
 .footer {
+    margin-top: auto;
     padding: 28px 0;
     border-top: 1px solid #14141a;
 }
