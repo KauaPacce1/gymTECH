@@ -1,4 +1,4 @@
-/* gymTECH | Página inicial */
+/* gymTECH | Página inicial, Sobre Mim */
 
 * {
     box-sizing: border-box;
@@ -92,12 +92,10 @@ h3 {
     padding: 28px 0;
     border-top: 1px solid #14141a;
 }
-
 .footer .container {
     color: #a1a1aa;
     font-size: 13px;
 }
-
 .footer .titulo {
     color: #fff;
     font-size: 16px;

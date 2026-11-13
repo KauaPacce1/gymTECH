@@ -12,12 +12,7 @@ Gráficos: Chart.js.
 
 ## Comandos
 Instalar: `npm i`. Rodar: `npm start`.
-commit:
-git pull 
-git add .
-git commit -m ""
-git push
-Credenciais em `.env` e `.env.dev`.
+Credenciais em `.env.dev`.
 
 ## Arquitetura
 O front-end fica em `public/` e o servidor em `src/`, dividido em três camadas, cada uma com um papel só. `routes` define o endereço de cada pedido, `controllers` trata o pedido e devolve a resposta, e `models` conversa com o MySQL. As tabelas são criadas em `src/database/script-tabelas.sql`.
