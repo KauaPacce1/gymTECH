@@ -2,27 +2,30 @@ CREATE DATABASE gymTECH;
 
 USE gymTECH;
 
-CREATE TABLE usuario (
+CREATE TABLE user (
 id INT PRIMARY KEY AUTO_INCREMENT,
-nome VARCHAR(45) NOT NULL,
+name VARCHAR(45) NOT NULL,
 email VARCHAR(100) NOT NULL UNIQUE,
-senha VARCHAR(45) NOT NULL
+password VARCHAR(45) NOT NULL
 );
 
-CREATE TABLE frequencia_mensal (
+CREATE TABLE monthly_frequency (
 id INT PRIMARY KEY AUTO_INCREMENT,
-frequencia TINYINT NOT NULL,
-fk_usuario INT,
-CONSTRAINT fk_usuario_frequencia FOREIGN KEY (fk_usuario) REFERENCES usuario(id) 
+frequency TINYINT NOT NULL,
+reference_month DATE NOT NULL,
+fk_user INT,
+CONSTRAINT ch_frequency CHECK(frequency BETWEEN 0 AND 31),
+CONSTRAINT uq_user_month UNIQUE (fk_user, reference_month),
+CONSTRAINT fk_user_frequency FOREIGN KEY (fk_user) REFERENCES user(id)
 );
 
-CREATE TABLE anotacao (
+CREATE TABLE workout_note (
 id INT PRIMARY KEY AUTO_INCREMENT,
-nome VARCHAR(45) NOT NULL,
-tipo VARCHAR(45) NOT NULL,
-CONSTRAINT chTipo CHECK(tipo IN ('Peito', 'Costas', 'Ombros', 'Pernas', 'Biceps', 'Triceps')),
-qtd_serie INT NOT NULL,
-data_treino DATE NOT NULL,
-fk_usuario INT,
-CONSTRAINT fk_usuario_anotacao FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+name VARCHAR(45) NOT NULL,
+muscle_group VARCHAR(45) NOT NULL,
+CONSTRAINT ch_muscle_group CHECK(muscle_group IN ('Peito', 'Costas', 'Ombros', 'Pernas', 'Biceps', 'Triceps')),
+sets INT NOT NULL,
+workout_date DATE NOT NULL,
+fk_user INT,
+CONSTRAINT fk_user_note FOREIGN KEY (fk_user) REFERENCES user(id)
 );
