@@ -1,4 +1,4 @@
-var usuarioModel = require("../models/usuarioModel");
+var userModel = require("../models/userModel");
 
 function enter(req, res) {
     var email = req.body.emailServer;
@@ -14,7 +14,7 @@ function enter(req, res) {
         return res.status(400).json({ message: "E-mail ou senha excede o tamanho permitido." });
     }
 
-    return usuarioModel.enter(email.trim(), password)
+    return userModel.enter(email.trim(), password)
         .then(function (users) {
             if (users.length === 1) {
                 res.json({ id: users[0].id, name: users[0].name, email: users[0].email });
@@ -54,7 +54,7 @@ function register(req, res) {
         return res.status(400).json({ message: "A senha deve ter no máximo 45 caracteres." });
     }
 
-    return usuarioModel.register(name.trim(), email.trim(), password)
+    return userModel.register(name.trim(), email.trim(), password)
         .then(function (result) {
             res.status(201).json({
                 id: result.insertId,

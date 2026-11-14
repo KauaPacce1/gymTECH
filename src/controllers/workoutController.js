@@ -21,7 +21,7 @@ function register(req, res) {
         });
     }
 
-    var muscleGroups = ["peito", "costas", "ombros", "pernas", "biceps", "triceps"];
+    var muscleGroups = ["Peito", "Costas", "Ombros", "Pernas", "Biceps", "Triceps"];
 
     if (!muscleGroups.includes(muscleGroup)) {
         return res.status(400).json({

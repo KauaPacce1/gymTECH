@@ -37,28 +37,28 @@
 
         <form id="registerForm" class="formulario" onsubmit="return register();">
           <div class="campo">
-            <label for="name_input">Nome:</label>
-            <input id="name_input" type="text" maxlength="45" placeholder="Seu nome" />
+            <label for="input_name">Nome:</label>
+            <input id="input_name" type="text" maxlength="45" placeholder="Seu nome" />
           </div>
 
           <div class="campo">
-            <label for="email_input">E-mail:</label>
-            <input id="email_input" type="email" maxlength="100" placeholder="voce@email.com" />
+            <label for="input_email">E-mail:</label>
+            <input id="input_email" type="email" maxlength="100" placeholder="voce@email.com" />
           </div>
 
           <div class="campo">
-            <label for="password_input">Senha:</label>
-            <input id="password_input" type="password" maxlength="45" placeholder="Mínimo de 8 caracteres" />
+            <label for="input_password">Senha:</label>
+            <input id="input_password" type="password" maxlength="45" placeholder="Mínimo de 8 caracteres" />
           </div>
 
           <div class="campo">
-            <label for="confirmPassword_input">Confirmar Senha:</label>
-            <input id="confirmPassword_input" type="password" maxlength="45" placeholder="Repita a senha" />
+            <label for="input_confirmPassword">Confirmar Senha:</label>
+            <input id="input_confirmPassword" type="password" maxlength="45" placeholder="Repita a senha" />
           </div>
 
           <div class="campo checkbox-row">
-            <label for="terms_input">Li e aceito os termos de uso</label>
-            <input id="terms_input" type="checkbox" />
+            <label for="input_terms">Li e aceito os termos de uso</label>
+            <input id="input_terms" type="checkbox" />
           </div>
 
           <button class="botao" type="submit">Criar conta</button>
@@ -74,11 +74,11 @@
 </html>
 <script>
   function register() {
-    var nameVar = name_input.value.trim();
-    var emailVar = email_input.value.trim();
-    var passwordVar = password_input.value;
-    var confirmPasswordVar = confirmPassword_input.value;
-    var termsVar = terms_input.checked;
+    var nameVar = input_name.value.trim();
+    var emailVar = input_email.value.trim();
+    var passwordVar = input_password.value;
+    var confirmPasswordVar = input_confirmPassword.value;
+    var termsVar = input_terms.checked;
 
 
     clearMessage();
@@ -103,7 +103,7 @@
 
     aguardar();
 
-    fetch("/usuarios/register", {
+    fetch("/users/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -37,13 +37,13 @@
 
                 <form id="loginForm" class="formulario" onsubmit="return enter();">
                     <div class="campo">
-                        <label for="email_input">E-mail:</label>
-                        <input id="email_input" type="email" maxlength="100" placeholder="voce@email.com">
+                        <label for="input_email">E-mail:</label>
+                        <input id="input_email" type="email" maxlength="100" placeholder="voce@email.com">
                     </div>
 
                     <div class="campo">
-                        <label for="password_input">Senha:</label>
-                        <input id="password_input" type="password" maxlength="45" placeholder="Sua senha">
+                        <label for="input_password">Senha:</label>
+                        <input id="input_password" type="password" maxlength="45" placeholder="Sua senha">
                     </div>
 
                     <button class="botao" type="submit">Entrar</button>
@@ -64,8 +64,8 @@
     function enter() {
         clearMessage();
 
-        var emailVar = email_input.value.trim();
-        var passwordVar = password_input.value;
+        var emailVar = input_email.value.trim();
+        var passwordVar = input_password.value;
 
         if (maxAttempts <= 0) {
             showError("Número máximo de tentativas atingido.");
@@ -78,7 +78,7 @@
 
         aguardar();
 
-        fetch("/usuarios/enter", {
+        fetch("/users/enter", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

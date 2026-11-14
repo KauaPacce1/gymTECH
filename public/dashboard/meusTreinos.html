@@ -70,31 +70,31 @@
 
             <form class="form" onsubmit="event.preventDefault(); registerWork();">
                 <div class="form-field">
-                    <label for="ipt_nameExerc">Nome do exercício</label>
-                    <input type="text" id="ipt_nameExerc" placeholder="Ex.: Supino inclinado" required>
+                    <label for="input_exerciseName">Nome do exercício</label>
+                    <input type="text" id="input_exerciseName" placeholder="Ex.: Supino inclinado" required>
                 </div>
 
                 <div class="form-field">
-                    <label for="ipt_typeMusc">Grupo muscular</label>
-                    <select id="ipt_typeMusc" required>
+                    <span>Grupo muscular</span>
+                    <select id="select_muscleGroup" required>
                         <option value="" disabled selected>Selecione um grupo</option>
-                        <option value="peito">Peito</option>
-                        <option value="costas">Costas</option>
-                        <option value="ombros">Ombros</option>
-                        <option value="pernas">Pernas</option>
-                        <option value="biceps">Bíceps</option>
-                        <option value="triceps">Tríceps</option>
+                        <option>Peito</option>
+                        <option>Costas</option>
+                        <option>Ombros</option>
+                        <option>Pernas</option>
+                        <option>Biceps</option>
+                        <option>Triceps</option>
                     </select>
                 </div>
 
                 <div class="form-field">
-                    <label for="ipt_qtdSets">Quantidade de séries</label>
-                    <input type="number" id="ipt_qtdSets" placeholder="Ex.: 3" min="1" required>
+                    <label for="input_sets">Quantidade de séries</label>
+                    <input type="number" id="input_sets" placeholder="Ex.: 3" min="1" required>
                 </div>
 
                 <div class="form-field">
-                    <label for="ipt_dateWork">Data do treino</label>
-                    <input type="date" id="ipt_dateWork" required>
+                    <label for="input_workoutDate">Data do treino</label>
+                    <input type="date" id="input_workoutDate" required>
                 </div>
 
                 <div class="modal-footer">
@@ -168,10 +168,10 @@
 
         function registerWork() {
             var userId = sessionStorage.getItem("userId");
-            var name = ipt_nameExerc.value.trim();
-            var muscleGroup = ipt_typeMusc.value.trim();
-            var sets = Number(ipt_qtdSets.value.trim());
-            var date = ipt_dateWork.value.trim();
+            var name = input_exerciseName.value.trim();
+            var muscleGroup = select_muscleGroup.value.trim();
+            var sets = Number(input_sets.value.trim());
+            var date = input_workoutDate.value.trim();
 
             var Valid = true;
 

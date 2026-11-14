@@ -15,7 +15,7 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
-var usuarioRouter = require("./src/routes/usuarios");
+var userRouter = require("./src/routes/users");
 var workoutRouter = require("./src/routes/workouts");
 
 app.use(express.json());
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(cors());
 
-app.use("/usuarios", usuarioRouter);
+app.use("/users", userRouter);
 app.use("/workouts", workoutRouter);
 
 app.listen(PORTA_APP, function () {

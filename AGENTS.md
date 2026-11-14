@@ -29,7 +29,7 @@ Commits curtos, no imperativo e em inglês (ex.: "add workout route").
 Perguntar antes de adicionar ou modificar dependências e implementações.
 Não editar `node_modules/`. Nunca ler, editar ou commitar credenciais reais em `.env*`.
 Controllers e rotas não acessam o banco; SQL só nos `models`.
-Validar cada mudança manualmente: subir com `npm run dev`, abrir a página afetada e checar erros no console do navegador e no terminal antes de dar a tarefa como concluída.
+Validar cada mudança manualmente: subir com `npm start`, abrir a página afetada e checar erros no console do navegador e no terminal antes de dar a tarefa como concluída.
 
 ## Regra geral: 
 Antes de implementar uma alteração, siga as tecnologias, arquitetura, convenções e restrições descritas neste documento. Caso alguma informação esteja ausente, analise o código existente e siga os padrões já adotados no projeto.

@@ -3,8 +3,8 @@ var mysql = require("mysql2");
 
 function register(userId, name, muscleGroup, sets, date) {
     var sql = `
-        INSERT INTO anotacao
-            (nome, tipo, qtd_serie, data_treino, fk_usuario)
+        INSERT INTO workout_note
+            (name, muscle_group, sets, workout_date, fk_user)
         VALUES (?, ?, ?, ?, ?);
     `;
 
@@ -17,13 +17,13 @@ function list(userId) {
     var sql = `
         SELECT
             id,
-            nome AS name,
-            tipo AS muscleGroup,
-            qtd_serie AS sets,
-            DATE_FORMAT(data_treino, '%Y-%m-%d') AS date
-        FROM anotacao
-        WHERE fk_usuario = ?
-        ORDER BY data_treino DESC, id DESC;
+            name,
+            muscle_group AS muscleGroup,
+            sets,
+            DATE_FORMAT(workout_date, '%Y-%m-%d') AS date
+        FROM workout_note
+        WHERE fk_user = ?
+        ORDER BY workout_date DESC, id DESC;
     `;
 
     return database.executar(mysql.format(sql, [userId]));
