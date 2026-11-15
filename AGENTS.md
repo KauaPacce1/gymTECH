@@ -20,10 +20,8 @@ Fluxo de uma requisição:
 página (`fetch`) → `routes` (encaminha) → `controllers` (valida e responde) → `models` (executa o SQL) → MySQL
 
 ## Padrões de desenvolvimento
-Usar `var` para declarar variáveis, seguindo o padrão do web-data-viz. Exceção: no código dos gráficos com Chart.js, usar `const`. Nunca usar `let`.
 Nomes de variáveis, funções, tabelas e colunas em inglês e em camelCase (ex.: `weeklyVolume`, `muscleGroup`). Textos exibidos ao usuário, como títulos, botões, mensagens e conteúdo informativo, em português.
 Nomes de arquivos seguem o padrão dos arquivos existentes em cada pasta.
-Commits curtos, no imperativo e em inglês (ex.: "add workout route").
 
 ## Cuidados e restrições
 Perguntar antes de adicionar ou modificar dependências e implementações.

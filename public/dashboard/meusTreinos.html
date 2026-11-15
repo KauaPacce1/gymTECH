@@ -13,10 +13,10 @@
         <div class="sidebar">
             <a class="logo" href="../index.html">gym<span>TECH</span></a>
             <div class="menu">
-                <a href="painel.html" class="menu-item menu-active">Painel</a>
+                <a href="painel.html" class="menu-item">Painel</a>
                 <a href="#" class="menu-item menu-active">Meus treinos</a>
-                <a href="../exercicios.html" class="menu-item menu-active">Exercícios</a>
-                <a href="../index.html" class="menu-item menu-active">Menu</a>
+                <a href="../exercicios.html" class="menu-item">Exercícios</a>
+                <a href="../index.html" class="menu-item">Menu</a>
             </div>
 
             <!-- AVATAR -->
@@ -138,8 +138,7 @@
             var list;
 
             for (var i = 0; i < works.length; i++) {
-                // Se mudou o dia, criar outro card.
-                if (works[i].date != currentDate) {
+                if (works[i].date != currentDate) { // Se mudou o dia, criar outro card.
                     currentDate = works[i].date;
 
                     var card = document.createElement("div");
@@ -156,8 +155,7 @@
                     history.appendChild(card);
                 }
 
-                // Colocar o exercício no card desse dia.
-                var item = document.createElement("li");
+                var item = document.createElement("li"); // Colocar o exercício no card desse dia.
                 item.textContent =
                     works[i].name + " - " +
                     works[i].sets + " séries";
@@ -187,10 +185,10 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        name: name,
-                        muscleGroup: muscleGroup,
-                        sets: sets,
-                        date: date
+                        name,
+                        muscleGroup,
+                        sets,
+                        date
                     })
                 }).then(function (response) {
                     if (response.ok) {

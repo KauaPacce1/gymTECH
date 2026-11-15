@@ -201,7 +201,8 @@ ul {
   font-size: 1.7rem; 
   margin-bottom: 4px; 
 }
-.stat-blue { 
+
+.stat-blue {
   color: var(--blue);
 }
 
@@ -220,6 +221,79 @@ ul {
 }
 .chart-volume { 
   height: 250px; 
+}
+
+/* FILTRO E CALENDÁRIO MENSAL */
+.month-filter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.month-filter label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.month-filter select {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.month-filter select:focus {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.calendar-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: #1c1c24;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.calendar-trained {
+  background: var(--purple);
+  color: var(--text);
+}
+
+.calendar-future {
+  background: #101016;
+  color: #4b4b58;
+}
+
+.calendar-today {
+  border-color: var(--blue);
 }
 
 /* MODAL DE TREINO */
