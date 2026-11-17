@@ -2,7 +2,7 @@
 
 ## Visão geral
 gymTECH é um site para praticantes de musculação. O usuário registra treinos (dias frequentados, exercícios, séries por exercício) e acompanha dois dashboards:
-frequência mensal e volume semanal (séries por grupo muscular, comparado à faixarecomendada). Também há uma área informativa com detalhes sobre exercícios.
+frequência mensal e volume semanal (séries por grupo muscular, comparado à faixarecomendada).
 
 ## Tecnologias
 Back-end: Node.js.

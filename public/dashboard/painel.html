@@ -16,7 +16,6 @@
             <div class="menu">
                 <a href="#" class="menu-item menu-active">Painel</a>
                 <a href="meusTreinos.html" class="menu-item">Meus treinos</a>
-                <a href="../exercicios.html" class="menu-item">Exercícios</a>
                 <a href="../index.html" class="menu-item">Menu</a>
             </div>
 
@@ -32,7 +31,7 @@
 
         <!-- CONTEÚDO PRINCIPAL-->
         <div class="content">
-            <p id="mensagemErro" class="erro" hidden>Não foi possível carregar os dados.</p>
+            <p id="errorMessage" class="erro" hidden>Não foi possível carregar os dados.</p>
 
             <!-- HEADER -->
             <div class="topbar">
@@ -48,15 +47,15 @@
             <!-- CARDS -->
             <div class="stats">
                 <div class="card">
-                    <strong id="statTreinosMes" class="stat-value">Carregando...</strong>
+                    <strong id="monthlyStat" class="stat-value">Carregando...</strong>
                     <span class="muted small">dias com treino no mês selecionado</span>
                 </div>
                 <div class="card">
-                    <strong id="statSeriesSemana" class="stat-value">Carregando...</strong>
+                    <strong id="weeklyStat" class="stat-value">Carregando...</strong>
                     <span class="muted small">séries na semana</span>
                 </div>
                 <div class="card">
-                    <strong id="statSequencia" class="stat-value stat-blue">Carregando...</strong>
+                    <strong id="streakStat" class="stat-value stat-blue">Carregando...</strong>
                     <span class="muted small">de sequência</span>
                 </div>
             </div>
@@ -64,7 +63,7 @@
             <!-- FILTRO -->
             <div class="month-filter">
                 <label for="monthSelect">Mês da frequência:</label>
-                <select id="monthSelect" onchange="showCalendar()" disabled></select>
+                <select id="monthSelect" disabled></select>
             </div>
 
             <!-- GRÁFICOS -->
@@ -89,7 +88,7 @@
                     </div>
                     <p class="muted small">Faixa recomendada: 10 a 20 séries por semana.</p>
                     <div class="chart-box chart-volume">
-                        <canvas id="graficoVolume"></canvas>
+                        <canvas id="weeklyVolumeChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -102,38 +101,137 @@
     validarSessao();
 
     const userId = sessionStorage.getItem('userId');
-
-    const monthSelect = document.getElementById('monthSelect');
-    const calendarDays = document.getElementById('calendarDays');
-    const calendarMonth = document.getElementById('calendarMonth');
-    const monthlyStat = document.getElementById('statTreinosMes');
-    const weeklyStat = document.getElementById('statSeriesSemana');
-    const streakStat = document.getElementById('statSequencia');
-    const errorMessage = document.getElementById('mensagemErro');
-
-    const groups = ['Peito', 'Costas', 'Ombros', 'Pernas', 'Biceps', 'Triceps'];
+    const errorMessage = document.getElementById('errorMessage');
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const todayText = formatDate(today);
+
+    // AAAA-MM-DD permite comparar as datas como texto, no mesmo formato da API.
+    function formatDate(date) {
+        const year = date.getFullYear();
+
+        // padStart coloca um zero à esquerda quando falta um dígito: '3' vira '03'.
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        return year + '-' + month + '-' + day;
+    }
+
+    function getWeekStart(date) {
+        const monday = new Date(date);
+        const weekday = monday.getDay();
+
+        let daysToSubtract = weekday - 1;
+
+        // Domingo é 0. Voltamos 6 dias para chegar à segunda-feira.
+        if (weekday === 0) {
+            daysToSubtract = 6;
+        }
+
+        monday.setDate(monday.getDate() - daysToSubtract);
+        return monday;
+    }
+
+
+    // Grafico frequencia mensal
+    const monthSelect = document.getElementById('monthSelect');
+    const calendarDays = document.getElementById('calendarDays');
+    const calendarMonth = document.getElementById('calendarMonth');
+    const monthlyStat = document.getElementById('monthlyStat');
 
     let trainedDays = [];
 
+    function collectTrainedDays(workouts) {
+        trainedDays = [];
 
-    // GRÁFICO DE SÉRIES POR GRUPO MUSCULAR
-    const chart = new Chart(document.getElementById('graficoVolume'), {
+        for (let i = 0; i < workouts.length; i++) {
+            const workoutDate = workouts[i].date;
+
+            // Vários exercícios no mesmo dia contam como um único dia de treino.
+            if (workoutDate <= todayText && !trainedDays.includes(workoutDate)) {
+                trainedDays.push(workoutDate);
+            }
+        }
+    }
+
+    function fillMonthSelect() {
+        for (let i = 0; i < 12; i++) {
+            const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
+            const option = document.createElement('option');
+
+            option.value = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+            option.textContent = date.toLocaleDateString('pt-BR', {month: 'long', year: 'numeric'});
+            monthSelect.appendChild(option);
+        }
+    }
+
+    function showCalendar() {
+        const parts = monthSelect.value.split('-');
+        const year = Number(parts[0]);
+        const month = Number(parts[1]);
+
+        // Date conta os meses de 0 a 11, por isso - 1.
+        const firstDay = new Date(year, month - 1, 1);
+        const firstWeekday = firstDay.getDay();
+
+        // Dia 0 do próximo mês retorna o último dia do mês selecionado.
+        const daysInMonth = new Date(year, month, 0).getDate();
+
+        calendarDays.innerHTML = '';
+        let totalTrainedDays = 0;
+
+        // Deixa espaços até a coluna do primeiro dia da semana do mês.
+        for (let i = 0; i < firstWeekday; i++) {
+            calendarDays.appendChild(document.createElement('div'));
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateText = formatDate(new Date(year, month - 1, day));
+            const item = document.createElement('div');
+
+            item.className = 'calendar-day';
+            item.textContent = day;
+
+            if (dateText > todayText) {
+                item.classList.add('calendar-future');
+            } else if (trainedDays.includes(dateText)) {
+                item.classList.add('calendar-trained');
+                totalTrainedDays++;
+            }
+
+            if (dateText === todayText) {
+                item.classList.add('calendar-today');
+            }
+
+            calendarDays.appendChild(item);
+        }
+
+        monthlyStat.textContent = totalTrainedDays;
+        calendarMonth.textContent = firstDay.toLocaleDateString('pt-BR', {month: 'long', year: 'numeric'});
+    }
+
+    monthSelect.addEventListener('change', showCalendar);
+
+
+    // grafico volume semanal
+    const weeklyStat = document.getElementById('weeklyStat');
+    const muscleGroups = ['Peito', 'Costas', 'Ombros', 'Pernas', 'Biceps', 'Triceps'];
+
+    const weeklyVolumeChart = new Chart('weeklyVolumeChart', {
         type: 'bar',
         data: {
-            labels: groups,
+            labels: muscleGroups,
             datasets: [{
                 label: 'Séries na semana',
                 data: [0, 0, 0, 0, 0, 0],
-                barThickness: 10, 
-                borderRadius: 5,  
+                barThickness: 10,
+                borderRadius: 5,
                 backgroundColor: '#8b5cf6'
             }]
         },
         options: {
-            indexAxis: 'y', // transforma em barras horizontais
+            indexAxis: 'y',
             maintainAspectRatio: false,
             plugins: {
                 legend: {display: false}
@@ -151,131 +249,61 @@
         }
     });
 
-    // MOSTRAR CALENDÁRIO
-    function showCalendar() {
-
-        const parts = monthSelect.value.split('-');
-        const year = Number(parts[0]);
-        const month = Number(parts[1]);
-
-        const lastDay = new Date(year, month, 0).getDate();
-        const firstWeekday = new Date(year, month - 1, 1).getDay();
-
-        calendarDays.innerHTML = '';
-        let total = 0;
-
-        // Espaços antes do primeiro dia do mês
-        for (let i = 0; i < firstWeekday; i++) {
-            calendarDays.appendChild(document.createElement('div'));
-        }
-
-        // Cria os dias do calendário
-        for (let day = 1; day <= lastDay; day++) {
-
-            const date = new Date(year, month - 1, day);
-            const item = document.createElement('div');
-
-            item.className = 'calendar-day';
-            item.textContent = day;
-
-            if (date > today) {
-                item.classList.add('calendar-future');
-
-            } else if (trainedDays.includes(date.toDateString())) {
-                item.classList.add('calendar-trained');
-                total++;
-            }
-
-            if (date.toDateString() === today.toDateString()) {
-                item.classList.add('calendar-today');
-            }
-
-            calendarDays.appendChild(item);
-        }
-
-        monthlyStat.textContent = total;
-
-        calendarMonth.textContent = new Date(year, month - 1, 1)
-            .toLocaleDateString('pt-BR', {
-                month: 'long',
-                year: 'numeric'
-            });
-    }
-
-
-    // ATUALIZAR O PAINEL
-    function updateDashboard(workouts) {
-        // Descobre a segunda-feira da semana
-        const monday = new Date(today);
-
-        let daysBack = today.getDay() - 1;
-
-        if (daysBack < 0) {
-            daysBack = 6;
-        }
-
-        monday.setDate(monday.getDate() - daysBack);
-
-        let totalSets = 0;
+    function updateWeeklyVolume(workouts) {
+        const weekStartText = formatDate(getWeekStart(today));
         const setsByGroup = [0, 0, 0, 0, 0, 0];
+        let totalSets = 0;
 
-        trainedDays = [];
-
-        // Percorre os registros
         for (let i = 0; i < workouts.length; i++) {
             const workout = workouts[i];
-            const date = new Date(workout.date + 'T00:00:00');
 
-            // Considera apenas treinos realizados
-            if (date <= today) {
-                const day = date.toDateString();
+            // Soma apenas os treinos entre segunda-feira e hoje.
+            if (workout.date >= weekStartText && workout.date <= todayText) {
+                const sets = Number(workout.sets);
+                totalSets += sets;
 
-                if (!trainedDays.includes(day)) {
-                    trainedDays.push(day);
-                }
-
-                // Soma as séries desta semana
-                if (date >= monday) {
-                    const sets = Number(workout.sets);
-                    totalSets += sets;
-
-                    const index = groups.indexOf(workout.muscleGroup);
-                    if (index !== -1) {
-                        setsByGroup[index] += sets;
-                    }
+                const groupIndex = muscleGroups.indexOf(workout.muscleGroup);
+                if (groupIndex !== -1) {
+                    setsByGroup[groupIndex] += sets;
                 }
             }
         }
 
-        // Calcula dias consecutivos de treino. Se não treinou hoje, começa de ontem.
+        weeklyStat.textContent = totalSets;
+        weeklyVolumeChart.data.datasets[0].data = setsByGroup;
+        weeklyVolumeChart.update();
+    }
+
+    const streakStat = document.getElementById('streakStat');
+
+    function updateStreak() {
         const checkDay = new Date(today);
 
-        if (!trainedDays.includes(checkDay.toDateString())) {
+        // Se ainda não treinou hoje, começa a contar a sequência por ontem.
+        if (!trainedDays.includes(formatDate(checkDay))) {
             checkDay.setDate(checkDay.getDate() - 1);
         }
 
         let streak = 0;
 
-        while (trainedDays.includes(checkDay.toDateString())) {
+        while (trainedDays.includes(formatDate(checkDay))) {
             streak++;
             checkDay.setDate(checkDay.getDate() - 1);
         }
 
-        // Atualiza os indicadores
-        weeklyStat.textContent = totalSets;
         streakStat.textContent = streak + (streak === 1 ? ' dia' : ' dias');
+    }
 
-        chart.data.datasets[0].data = setsByGroup;
-        chart.update();
+    function updateDashboard(workouts) {
+        collectTrainedDays(workouts);
+        showCalendar();
+        updateWeeklyVolume(workouts);
+        updateStreak();
 
         monthSelect.disabled = false;
         errorMessage.hidden = true;
-
-        showCalendar();
     }
 
-
-    // BUSCAR TREINOS DA API
     function loadWorkouts() {
         fetch('/workouts/' + userId)
             .then(function (response) {
@@ -285,7 +313,6 @@
                 return response.json();
             })
             .then(updateDashboard)
-
             .catch(function (error) {
                 console.error(error);
                 errorMessage.hidden = false;
@@ -295,25 +322,8 @@
             });
     }
 
-
-    // PREENCHER OS ÚLTIMOS 12 MESES
-    function fillMonthSelect() {
-        for (let i = 0; i < 12; i++) {
-            // Ao voltar de janeiro, Date ajusta o ano automaticamente.
-            const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
-            const option = document.createElement('option');
-
-            option.value = date.getFullYear() + '-' + (date.getMonth() + 1);
-            option.textContent = date.toLocaleDateString('pt-BR', {
-                month: 'long',
-                year: 'numeric'
-            });
-            monthSelect.appendChild(option);
-        }
-    }
-
-    // INICIAR O PAINEL
     fillMonthSelect();
+
     if (userId) {
         loadWorkouts();
     }
