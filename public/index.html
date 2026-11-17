@@ -18,10 +18,14 @@
                 <li><a href="#funcionalidades">Funcionalidades</a></li>
                 <li><a href="#paineis">Painéis</a></li>
             </ul>
-            <div class="auth">
+            <div class="auth" id="guestActions">
                 <a class="btn btn-dark" href="login.html">Entrar</a>
                 <a class="btn btn-purple" href="cadastro.html">Criar conta</a>
             </div>
+            <a class="user-profile" id="userProfile" href="./dashboard/painel.html">
+                <span class="user-avatar" id="userAvatar"></span>
+                <span id="userName"></span>
+            </a>
         </div>
     </div>
 
@@ -33,7 +37,7 @@
                 <h1>Registre seus treinos. <span>Veja sua evolução.</span></h1>
                 <p class="lead">Anote exercícios e séries, acompanhe sua frequência mensal e saiba se o volume semanal de cada grupo muscular está na faixa recomendada.</p>
                 <div class="hero-buttons">
-                    <a class="btn btn-purple" href="cadastro.html">Começar agora</a>
+                    <a class="btn btn-purple" id="startButton" href="cadastro.html">Começar agora</a>
                     <a class="btn btn-dark" href="#funcionalidades">Ver como funciona</a>
                 </div>
             </div>
@@ -141,7 +145,7 @@
     </div>
 
     <!-- CHAMADA FINAL -->
-    <div class="cta">
+    <div class="cta" id="signupCta">
         <div class="container">
             <div class="cta-box">
                 <h2>Comece a registrar hoje</h2>
@@ -158,8 +162,23 @@
             <span>Projeto individual · SPTECH</span>
         </div>
     </div>
+<script>
+        const userId = sessionStorage.getItem('userId');
+        const userName = sessionStorage.getItem('userName');
+        const userEmail = sessionStorage.getItem('userEmail');
 
-    <script>
+        if (userId && userName && userEmail) {
+            document.getElementById('guestActions').style.display = 'none';
+            document.getElementById('signupCta').style.display = 'none';
+            document.getElementById('userProfile').style.display = 'flex';
+
+            document.getElementById('userName').textContent = userName;
+            document.getElementById('userAvatar').textContent =
+                userName.trim().charAt(0).toUpperCase();
+
+            document.getElementById('startButton').href = './dashboard/painel.html';
+        }
+
         // Dados de exemplo (depois virão do banco)
         var weeklyVolume = [
             { muscleGroup: "Peito", sets: 16 },
@@ -198,13 +217,11 @@
         }
 
         function getColor(sets) {
-            if (sets < 10) {
+            if (sets < 10 || sets > 20) {
                 return "cyan";
+            } else {
+                return "purple";
             }
-            if (sets > 20) {
-                return "coral";
-            }
-            return "purple";
         }
 
         function renderVolume(elementId, totalGroups) {

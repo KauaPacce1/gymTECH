@@ -91,6 +91,22 @@ h3 {
     gap: 12px;
 }
 
+.user-profile {
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #7c3aed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .footer {
     margin-top: auto;
     padding: 28px 0;
