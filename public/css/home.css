@@ -39,25 +39,7 @@ h3 {
     padding: 0 24px;
 }
 
-.subtitle {
-    margin-top: 8px;
-    color: #a1a1aa;
-}
-
-/* Botões */
-
-.btn {
-    display: inline-block;
-    padding: 12px 22px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-.btn-purple { background: #7c3aed; }
-.btn-black { background: #000; }
-.btn-dark { border: 1px solid #2a2a33; }
-
-/* Cabeçalho e footer */
+/* Cabeçalho e footer compartilhados */
 
 .header {
     padding: 20px 0;
@@ -86,18 +68,109 @@ h3 {
     font-size: 14px;
 }
 
-.auth {
+.footer {
+    margin-top: auto;
+    padding: 28px 0;
+    border-top: 1px solid #14141a;
+}
+
+.footer .container {
+    color: #a1a1aa;
+    font-size: 13px;
+}
+
+.footer .titulo {
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Visual da página inicial */
+
+.home-anime {
+    background: #08070c;
+}
+
+.home-anime .container {
+    max-width: 1320px;
+    padding: 0 32px;
+}
+
+.home-anime h2 {
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.home-anime h2 span,
+.home-anime .manifesto span {
+    color: #b774f5;
+}
+
+.home-anime .subtitle {
+    margin-top: 8px;
+    color: #bab3c7;
+    font-size: 17px;
+}
+
+/* Botões */
+
+.home-anime .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: transform .2s;
+}
+
+.home-anime .btn:hover {
+    transform: translateY(-2px);
+}
+
+.home-anime .btn-purple {
+    background: linear-gradient(120deg, #8b26f5, #7824e5);
+}
+
+.home-anime .btn-dark {
+    background: #09080bb8;
+    border: 1px solid #5b496a;
+}
+
+.home-anime .btn-black {
+    background: #380b77;
+    padding: 15px 25px;
+}
+
+.home-anime a:focus-visible {
+    outline: 3px solid #d9adff;
+    outline-offset: 5px;
+}
+
+/* Cabeçalho da página inicial */
+
+.home-anime .header {
+    background: #09080e;
+}
+
+.home-anime .header .titulo {
+    font-size: 28px;
+}
+
+.home-anime .navbar {
+    color: #d5cfe2;
+}
+
+.home-anime .auth {
     display: flex;
     gap: 12px;
 }
 
-.user-profile {
+.home-anime .user-profile {
     display: none;
     align-items: center;
     gap: 10px;
 }
 
-.user-avatar {
+.home-anime .user-avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -107,383 +180,193 @@ h3 {
     justify-content: center;
 }
 
-.footer {
-    margin-top: auto;
-    padding: 28px 0;
-    border-top: 1px solid #14141a;
-}
-.footer .container {
-    color: #a1a1aa;
-    font-size: 13px;
-}
-.footer .titulo {
-    color: #fff;
-    font-size: 16px;
-}
-
 /* Banner */
 
-.banner {
-    padding: 50px 0 90px;
+.home-anime .banner {
+    background-image: linear-gradient(90deg, rgba(7, 5, 12, .35), transparent 70%), url('../assets/imgs/hero.webp');
+    background-size: cover;
+    background-position: center;
 }
 
-.banner .container {
+.home-anime .banner > .container {
+    position: relative;
+    min-height: 660px;
     display: flex;
     align-items: center;
-    gap: 60px;
+    padding-top: 65px;
+    padding-bottom: 90px;
 }
 
-.banner-text {
-    flex: 1;
+.home-anime .banner-text {
+    width: 55%;
+    max-width: 690px;
 }
 
-.badge {
+.home-anime .badge {
     display: inline-block;
-    padding: 6px 14px;
-    border: 1px solid #3b2a6b;
+    padding: 8px 18px;
+    border: 1px solid #ac60f5;
     border-radius: 20px;
-    background: #14102a;
-    color: #a78bfa;
-    font-size: 11px;
+    background: #160d249c;
+    color: #cd98ff;
+    font-size: 13px;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
     text-transform: uppercase;
 }
 
-.banner h1 {
-    margin: 22px 0;
-    font-size: 56px;
-    line-height: 1.05;
+.home-anime .banner h1 {
+    font-size: clamp(40px, 4.5vw, 64px);
+    line-height: 1.12;
+    letter-spacing: -2px;
+    margin: 28px 0;
 }
 
-.banner h1 span {
+.home-anime .banner h1 span {
     display: block;
-    color: #a78bfa;
+    color: #bd7cf6;
 }
 
-.lead {
-    color: #a1a1aa;
-    font-size: 18px;
+.home-anime .lead {
+    max-width: 540px;
+    font-size: 21px;
+    color: #d1cadb;
 }
 
-.hero-buttons {
+.home-anime .hero-buttons {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
-    margin-top: 30px;
+    margin-top: 36px;
 }
 
-/* Painel de exemplo */
-
-.mockup {
-    position: relative;
-    flex: 1.2;
-    background: #0b0b10;
-    border: 1px solid #1c1c24;
-    border-radius: 14px;
-    box-shadow: 0 0 80px rgba(124, 58, 237, 0.3);
+.home-anime .hero-buttons .btn {
+    padding: 16px 24px;
+    font-size: 17px;
 }
 
-.mockup-top {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 12px 16px;
-}
+/* Funcionalidades */
 
-.dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #2a2a33;
-}
-
-.url {
-    margin: 0 auto;
-    padding: 4px 40px;
-    border-radius: 6px;
-    background: #1a1a22;
-    color: #a1a1aa;
-    font-size: 11px;
-}
-
-.mockup-main {
-    display: flex;
-    gap: 12px;
-    padding: 4px 14px 22px;
-}
-
-.mockup-side {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.logo-g,
-.side-item {
-    width: 28px;
-    border-radius: 6px;
-}
-
-.logo-g {
-    height: 28px;
-    background: #7c3aed;
+.home-anime .manifesto {
+    padding: 30px 0;
+    border-top: 1px solid #9b4eda;
+    border-bottom: 1px solid #21142d;
     text-align: center;
-    line-height: 28px;
+    font-size: clamp(20px, 2.6vw, 34px);
     font-weight: bold;
 }
 
-.side-item {
-    height: 20px;
-    background: #1a1a22;
+.home-anime .social {
+    padding: 80px 0 45px;
 }
 
-.mockup-content {
-    flex: 1;
-}
-
-.mockup-head {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.mockup-head span {
-    color: #a1a1aa;
-    font-size: 12px;
-}
-
-.stats,
-.mini-panels {
+.home-anime .boxes {
     display: grid;
-    gap: 10px;
-}
-
-.stats {
     grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 10px;
+    gap: 24px;
+    margin-top: 36px;
 }
 
-.mini-panels {
-    grid-template-columns: 1fr 1fr;
+.home-anime .box,
+.home-anime .panel {
+    border: 1px solid #302538;
+    border-radius: 18px;
 }
 
-.stat,
-.mini-panel {
-    padding: 10px;
-    border-radius: 8px;
-    background: #12121a;
-}
-
-.stat strong {
-    display: block;
-    font-size: 18px;
-}
-
-.stat span {
-    color: #a1a1aa;
-    font-size: 10px;
-}
-
-.cyan-text {
-    color: #38bdf8;
-}
-
-.mini-panel h4 {
-    margin-bottom: 8px;
-    font-size: 11px;
-}
-
-.float-badge {
-    position: absolute;
-    top: -14px;
-    right: -10px;
-    padding: 6px 12px;
-    border: 1px solid #155e75;
-    border-radius: 20px;
-    background: #0c2a3a;
-    color: #38bdf8;
-    font-size: 12px;
-}
-
-.toast {
-    position: absolute;
-    left: -30px;
-    bottom: -28px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border: 1px solid #1c1c24;
-    border-radius: 10px;
-    background: #0d0d12;
-}
-
-.check {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: #7c3aed;
-    text-align: center;
-    line-height: 26px;
-    font-size: 13px;
-}
-
-.toast strong {
-    display: block;
-    font-size: 12px;
-}
-
-.toast div span {
-    color: #a1a1aa;
-    font-size: 11px;
-}
-
-/* Calendário */
-
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 4px;
-}
-
-.calendar.big {
-    gap: 8px;
-}
-
-.day {
-    aspect-ratio: 1;
-    border-radius: 4px;
-    background: #1a1a22;
-}
-
-.day.on { background: #8b5cf6; }
-.day.light { background: #4c2a94; }
-
-/* Barras de volume */
-
-.bar-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-    font-size: 12px;
-}
-
-.label {
-    width: 50px;
-}
-
-.value {
-    width: 22px;
-    text-align: right;
-}
-
-.track {
-    position: relative;
-    flex: 1;
-    height: 8px;
-    border-radius: 4px;
-    background: #1a1a22;
+.home-anime .box {
+    padding: 0 26px 30px;
     overflow: hidden;
+    background: linear-gradient(135deg, #121019, #0c0b11);
 }
 
-/* faixa recomendada: 10 a 20 séries, de um máximo de 24 */
-.band {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 41.6%;
-    width: 41.6%;
-    background: #2a2a38;
+.home-anime .feature-image {
+    display: block;
+    width: calc(100% + 52px);
+    height: auto;
+    aspect-ratio: 1.9;
+    object-fit: cover;
+    margin: 0 -26px 24px;
 }
 
-.fill {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    border-radius: 4px;
-}
-
-.fill.purple { background: #8b5cf6; }
-.fill.cyan { background: #38bdf8; }
-.fill.coral { background: #f87171; }
-
-/* Seções */
-
-.social,
-.panels {
-    padding: 70px 0;
-}
-
-.boxes {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 32px;
-}
-
-.box,
-.panel {
-    border: 1px solid #1c1c24;
-    border-radius: 12px;
-    background: #0d0d12;
-}
-
-.box,
-.panel {
-    padding: 24px;
-}
-
-.number {
-    color: #a78bfa;
-    font-size: 13px;
+.home-anime .number {
+    font-size: 17px;
     font-weight: bold;
+    color: #bc75ff;
 }
 
-.box h3 {
-    margin: 8px 0;
+.home-anime .box h3 {
+    font-size: 25px;
+    line-height: 1.25;
+    margin: 10px 0;
 }
 
-.box p {
-    color: #a1a1aa;
+.home-anime .box p {
+    font-size: 16px;
+    color: #c3bbcf;
+}
+
+/* Prévia dos painéis em imagens */
+
+.home-anime .panels {
+    padding: 30px 0 65px;
+}
+
+.home-anime .panels-heading {
+    margin-bottom: 30px;
+}
+
+.home-anime .panels > .container:not(.panels-heading) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.home-anime .panel {
+    padding: 28px;
+    background: #0f0d15;
+    min-width: 0;
+}
+
+.home-anime .panel h3 {
+    font-size: 23px;
+}
+
+.home-anime .panel .subtitle {
+    margin-bottom: 20px;
     font-size: 14px;
 }
 
-/* Painéis */
-
-.panels {
-    background: #08080c;
+.home-anime .chart-image {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
-.panels .container {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 20px;
+/* Chamada final e footer */
+
+.home-anime .cta {
+    padding-bottom: 65px;
 }
 
-.panel .subtitle {
-    margin-bottom: 20px;
-    font-size: 13px;
+.home-anime .cta-box {
+    background: #7427ce url('../assets/imgs/banner-final.webp') center / cover no-repeat;
+    min-height: 355px;
+    padding: 52px;
+    border: 1px solid #6e448c;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
-.panel .bar-row {
-    margin-bottom: 16px;
+.home-anime .cta-box h2 {
+    max-width: 52%;
+    font-size: clamp(30px, 3.7vw, 48px);
 }
 
-/* Chamada final */
-
-.cta {
-    padding-bottom: 60px;
-}
-
-.cta-box {
-    padding: 50px 24px;
-    border-radius: 20px;
-    background: #7c3aed;
-    text-align: center;
-}
-
-.cta-box p {
+.home-anime .cta-box p {
     margin: 10px 0 24px;
+    font-size: 20px;
+}
+
+.home-anime .footer {
+    border-color: #302538;
 }

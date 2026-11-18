@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>gymTECH · Página Inicial</title>
-    <script src="./js/sessao.js"></script>
     <link rel="stylesheet" href="./css/home.css">
 </head>
-<body>
+<body class="home-anime">
     <!-- MENU -->
     <div class="header">
         <div class="container">
@@ -33,92 +32,41 @@
     <div class="banner">
         <div class="container">
             <div class="banner-text">
-                <span class="badge">Para praticantes de musculação</span>
-                <h1>Registre seus treinos. <span>Veja sua evolução.</span></h1>
-                <p class="lead">Anote exercícios e séries, acompanhe sua frequência mensal e saiba se o volume semanal de cada grupo muscular está na faixa recomendada.</p>
+                <span class="badge">Academia × Anime</span>
+                <h1>Seu próximo nível <span>começa no treino.</span></h1>
+                <p class="lead">Registre seus treinos, acompanhe sua constância e veja sua evolução.</p>
                 <div class="hero-buttons">
                     <a class="btn btn-purple" id="startButton" href="cadastro.html">Começar agora</a>
-                    <a class="btn btn-dark" href="#funcionalidades">Ver como funciona</a>
+                    <a class="btn btn-dark" href="#funcionalidades">Explorar funções</a>
                 </div>
             </div>
 
-            <div class="mockup">
-                <span class="float-badge">Pernas abaixo da faixa</span>
-                <div class="mockup-top">
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                    <span class="url">gymtech.app/painel</span>
-                </div>
-                <div class="mockup-main">
-                    <div class="mockup-side">
-                        <span class="logo-g">g</span>
-                        <span class="side-item"></span>
-                        <span class="side-item"></span>
-                        <span class="side-item"></span>
-                        <span class="side-item"></span>
-                    </div>
-                    <div class="mockup-content">
-                        <div class="mockup-head">
-                            <strong>Painel</strong>
-                            <span>Dezembro</span>
-                        </div>
-                        <div class="stats">
-                            <div class="stat">
-                                <strong>14</strong>
-                                <span>treinos no mês</span>
-                            </div>
-                            <div class="stat">
-                                <strong>58</strong>
-                                <span>séries na semana</span>
-                            </div>
-                            <div class="stat">
-                                <strong class="cyan-text">4 dias</strong>
-                                <span>de sequência</span>
-                            </div>
-                        </div>
-                        <div class="mini-panels">
-                            <div class="mini-panel">
-                                <h4>Frequência</h4>
-                                <div class="calendar" id="heroCalendar"></div>
-                            </div>
-                            <div class="mini-panel">
-                                <h4>Volume semanal</h4>
-                                <div id="heroVolume"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="toast">
-                    <span class="check">✓</span>
-                    <div>
-                        <strong>Treino salvo</strong>
-                        <span>Peito e tríceps · 12 séries</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+    <div class="manifesto"><div class="container">Disciplina de protagonista. <span>Evolução de verdade.</span></div></div>
 
     <!-- FUNCIONALIDADES -->
     <div class="social" id="funcionalidades">
         <div class="container">
-            <h2>Tudo o que você precisa para treinar com dados</h2>
-            <p class="subtitle">Três funções simples, feitas para o seu dia a dia na academia.</p>
+            <h2>Todo protagonista tem uma <span>rotina.</span></h2>
+            <p class="subtitle">Três funções para transformar esforço em evolução.</p>
             <div class="boxes">
                 <div class="box">
+                    <img class="feature-image" src="assets/imgs/registro-treinos.webp" alt="" width="3840" height="2160" loading="lazy">
                     <span class="number">01</span>
                     <h3>Registro de treinos</h3>
                     <p>Marque os dias que você foi, adicione exercícios e informe quantas séries fez em cada um.</p>
                 </div>
 
                 <div class="box">
+                    <img class="feature-image" src="assets/imgs/frequencia-mensal.webp" alt="" width="3840" height="2160" loading="lazy">
                     <span class="number">02</span>
                     <h3>Frequência mensal</h3>
                     <p>Veja em um calendário quantos dias você treinou no mês e mantenha a constância.</p>
                 </div>
 
                 <div class="box">
+                    <img class="feature-image" src="assets/imgs/volume-semanal.webp" alt="" width="3840" height="2160" loading="lazy">
                     <span class="number">03</span>
                     <h3>Volume semanal</h3>
                     <p>Compare as séries por grupo muscular com a faixa recomendada e ajuste seu treino.</p>
@@ -129,17 +77,18 @@
 
     <!-- PAINÉIS -->
     <div class="panels" id="paineis">
+        <div class="container panels-heading"><h2>Acompanhe seu arco de <span>evolução.</span></h2><p class="subtitle">Prévia do painel com dados ilustrativos.</p></div>
         <div class="container">
             <div class="panel">
                 <h3>Frequência mensal</h3>
                 <p class="subtitle">Cada quadrado é um dia. Os acesos são treinos.</p>
-                <div class="calendar big" id="monthCalendar"></div>
+                <img class="chart-image" src="assets/imgs/grafico-frequencia.svg" alt="Exemplo de calendário com 28 dias e 14 dias de treino destacados em roxo." width="1000" height="500" loading="lazy">
             </div>
 
             <div class="panel">
                 <h3>Volume semanal por grupo muscular</h3>
-                <p class="subtitle">A faixa sombreada é a recomendada (10 a 20 séries).</p>
-                <div id="panelVolume"></div>
+                <p class="subtitle">Exemplo de quantidade de séries por grupo muscular.</p>
+                <img class="chart-image" src="assets/imgs/grafico-volume.svg" alt="Exemplo de séries na semana: peito 16, costas 12, pernas 8, ombros 22 e bíceps 10." width="1000" height="500" loading="lazy">
             </div>
         </div>
     </div>
@@ -148,8 +97,8 @@
     <div class="cta" id="signupCta">
         <div class="container">
             <div class="cta-box">
-                <h2>Comece a registrar hoje</h2>
-                <p>Crie sua conta e acompanhe seu próximo treino.</p>
+                <h2>Escreva seu<br>próximo capítulo.</h2>
+                <p>Um treino de cada vez.</p>
                 <a class="btn btn-black" href="cadastro.html">Criar conta grátis</a>
             </div>
         </div>
@@ -179,74 +128,6 @@
             document.getElementById('startButton').href = './dashboard/painel.html';
         }
 
-        // Dados de exemplo (depois virão do banco)
-        var weeklyVolume = [
-            { muscleGroup: "Peito", sets: 16 },
-            { muscleGroup: "Costas", sets: 12 },
-            { muscleGroup: "Pernas", sets: 8 },
-            { muscleGroup: "Ombros", sets: 22 },
-            { muscleGroup: "Bíceps", sets: 10 }
-        ];
-
-        // 2 = treino, 1 = treino leve, 0 = sem treino (28 dias, 14 treinos)
-        var monthDays = [
-            2, 0, 2, 1, 2, 0, 0,
-            2, 2, 0, 2, 0, 1, 0,
-            2, 0, 2, 0, 0, 2, 0,
-            0, 2, 1, 2, 0, 0, 0
-        ];
-
-        var chartMax = 24;
-
-        function renderCalendar(elementId, totalDays) {
-            var html = "";
-
-            for (var i = 0; i < totalDays; i++) {
-                var className = "day";
-
-                if (monthDays[i] == 2) {
-                    className += " on";
-                } else if (monthDays[i] == 1) {
-                    className += " light";
-                }
-
-                html += '<span class="' + className + '"></span>';
-            }
-
-            document.getElementById(elementId).innerHTML = html;
-        }
-
-        function getColor(sets) {
-            if (sets < 10 || sets > 20) {
-                return "cyan";
-            } else {
-                return "purple";
-            }
-        }
-
-        function renderVolume(elementId, totalGroups) {
-            var html = "";
-
-            for (var i = 0; i < totalGroups; i++) {
-                var width = weeklyVolume[i].sets / chartMax * 100;
-
-                html += '<div class="bar-row">';
-                html += '<span class="label">' + weeklyVolume[i].muscleGroup + '</span>';
-                html += '<div class="track">';
-                html += '<div class="band"></div>';
-                html += '<div class="fill ' + getColor(weeklyVolume[i].sets) + '" style="width:' + width + '%"></div>';
-                html += '</div>';
-                html += '<span class="value">' + weeklyVolume[i].sets + '</span>';
-                html += '</div>';
-            }
-
-            document.getElementById(elementId).innerHTML = html;
-        }
-
-        renderCalendar("heroCalendar", 21);
-        renderCalendar("monthCalendar", 28);
-        renderVolume("heroVolume", 4);
-        renderVolume("panelVolume", 5);
     </script>
 </body>
 </html>
