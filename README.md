@@ -1,22 +1,42 @@
-# 💪 gymTECH
+![Página inicial do gymTECH](./public/assets/imgs/hero.webp)
 
-## 📖 Sobre o projeto
+# 💪 gymTECH — Projeto Individual
 
-O **gymTECH** é uma aplicação web para praticantes de musculação que permite registrar treinos e acompanhar a própria evolução por meio de dashboards. O sistema mostra a frequência mensal e o volume semanal de séries por grupo muscular, comparado à faixa recomendada.
+> Projeto acadêmico desenvolvido no 1º semestre de Análise e Desenvolvimento de Sistemas na SPTech.
 
-Projeto individual desenvolvido por mim, estudante de Análise e Desenvolvimento de Sistemas na SPTECH.
+## Sobre o projeto
+
+O **gymTECH** é uma aplicação web para praticantes de musculação
+registrarem seus treinos e acompanharem sua evolução.
+
+O projeto combina meu interesse por **academia, anime e tecnologia**.
+Sua identidade visual traz a ideia de evolução de um protagonista:
+cada treino representa mais um passo na construção dos resultados.
+
+Na aplicação, o usuário pode registrar exercícios e séries, acompanhar 
+sua frequência mensal e visualizar o volume semanal de treino por grupo 
+muscular. Essas informações ajudam a analisar a distribuição do treino 
+e apoiam decisões sobre manter ou ajustar a quantidade de séries de cada exercício.
+
+## 🎯 Objetivo
+
+Aplicar os conhecimentos adquiridos durante o primeiro semestre,
+integrando-os em um projeto com significado pessoal sobre um tema da minha escolha.
+
 
 ## ✨ Funcionalidades
 
 | Recurso | Descrição |
-| --- | --- |
-| 📝 **Registro de treinos** | Cadastre os dias frequentados, os exercícios realizados e o número de séries de cada um. |
-| 📅 **Dashboard de frequência mensal** | Veja em quais dias do mês você treinou e acompanhe sua consistência. |
-| 📊 **Dashboard de volume semanal** | Compare as séries semanais por grupo muscular com a faixa recomendada e descubra o que está abaixo, dentro ou acima do ideal. |
+|---------|-----------|
+| Cadastro e login | Acesso à área do usuário. |
+| Registro de treinos | Registro dos dias de treino, exercícios e quantidade de séries. |
+| Frequência mensal | Visualização dos dias treinados para acompanhar a constância. |
+| Volume semanal | Visualização das séries realizadas por grupo muscular. |
 
 ## 🛠️ Tecnologias
 
-- **Front-end:** HTML5, CSS3, JavaScript
+- **Front-end:** HTML, CSS e JavaScript
 - **Back-end:** Node.js
 - **Banco de dados:** MySQL
-- **Gráficos:** Chart.js
+- **Gráficos do painel:** Chart.js
+

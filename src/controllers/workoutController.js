@@ -13,9 +13,7 @@ function register(req, res) {
         });
     }
 
-    if (typeof name !== "string" ||
-        name.trim() === "" ||
-        name.trim().length > 45) {
+    if (typeof name !== "string" || name.trim() === "" || name.trim().length > 45) {
         return res.status(400).json({
             message: "Preencha o nome do exercício com até 45 caracteres."
         });
@@ -35,15 +33,14 @@ function register(req, res) {
         });
     }
 
-    if (typeof date !== "string" || date === "") {
+    if (typeof date !== "string" || date.trim() === "") {
         return res.status(400).json({
             message: "Preencha a data do treino."
         });
     }
 
-    return workoutModel.register(
-        userId, name.trim(), muscleGroup, sets, date
-    ).then(function (result) {
+    return workoutModel.register(userId, name.trim(), muscleGroup, sets, date)
+    .then(function (result) {
         res.status(201).json({
             id: result.insertId,
             message: "Treino registrado com sucesso!"

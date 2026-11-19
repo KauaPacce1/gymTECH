@@ -112,22 +112,22 @@
         </div>
     </div>
 <script>
-        const userId = sessionStorage.getItem('userId');
-        const userName = sessionStorage.getItem('userName');
-        const userEmail = sessionStorage.getItem('userEmail');
+    const userId = sessionStorage.getItem('userId');
+    const userName = sessionStorage.getItem('userName');
+    const userEmail = sessionStorage.getItem('userEmail');
 
-        if (userId && userName && userEmail) {
-            document.getElementById('guestActions').style.display = 'none';
-            document.getElementById('signupCta').style.display = 'none';
-            document.getElementById('userProfile').style.display = 'flex';
+    if (userId && userName && userEmail) {
+        document.getElementById('guestActions').style.display = 'none';
+        document.getElementById('signupCta').style.display = 'none';
+        document.getElementById('userProfile').style.display = 'flex';
 
-            document.getElementById('userName').textContent = userName;
-            document.getElementById('userAvatar').textContent =
-                userName.trim().charAt(0).toUpperCase();
+        document.getElementById('userName').textContent = userName;
+        document.getElementById('userAvatar').textContent =
+            userName.trim().charAt(0).toUpperCase();
 
-            document.getElementById('startButton').href = './dashboard/painel.html';
-        }
+        document.getElementById('startButton').href = './dashboard/painel.html';
+    }
 
-    </script>
+</script>
 </body>
 </html>
