@@ -430,9 +430,29 @@ ul {
 }
 
 .workout-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
   padding: 12px 0;
 }
 
 .workout-list li + li {
   border-top: 1px solid var(--border);
+}
+
+.workout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.workout-actions button {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.workout-remove {
+  color: var(--red);
 }

@@ -29,7 +29,30 @@ function list(userId) {
     return database.executar(mysql.format(sql, [userId]));
 }
 
+function update(userId, workoutId, name, muscleGroup, sets, date) {
+    var sql = `
+        UPDATE workout_note
+        SET name = ?, muscle_group = ?, sets = ?, workout_date = ?
+        WHERE id = ? AND fk_user = ?;
+    `;
+
+    return database.executar(
+        mysql.format(sql, [name, muscleGroup, sets, date, workoutId, userId])
+    );
+}
+
+function remove(userId, workoutId) {
+    var sql = `
+        DELETE FROM workout_note
+        WHERE id = ? AND fk_user = ?;
+    `;
+
+    return database.executar(mysql.format(sql, [workoutId, userId]));
+}
+
 module.exports = {
     register,
-    list
+    list,
+    update,
+    remove
 };

@@ -59,8 +59,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div>
-                    <h2>Registrar treino</h2>
-                    <p class="muted small">Preencha os dados do seu treino.</p>
+                    <h2 id="workoutModalTitle">Registrar treino</h2>
+                    <p id="workoutModalDescription" class="muted small">Preencha os dados do seu treino.</p>
                 </div>
                 <button type="button" class="btn-fechar" onclick="closeModalWork()" aria-label="Fechar modal">
                     ×
@@ -70,7 +70,7 @@
             <form class="form" onsubmit="event.preventDefault(); registerWork();">
                 <div class="form-field">
                     <label for="input_exerciseName">Nome do exercício</label>
-                    <input type="text" id="input_exerciseName" placeholder="Ex.: Supino inclinado" required>
+                    <input type="text" id="input_exerciseName" placeholder="Ex.: Supino inclinado" maxlength="45" required>
                 </div>
 
                 <div class="form-field">
@@ -100,7 +100,7 @@
                     <button type="button" class="btn-cancel" onclick="closeModalWork()">
                         Cancelar
                     </button>
-                    <button type="submit" class="btn-confirm">
+                    <button type="submit" id="workoutSubmitButton" class="btn-confirm">
                         Registrar treino
                     </button>
                 </div>
@@ -112,13 +112,21 @@
     <script>
         validarSessao()
 
+        var editingWorkoutId = null;
+
         // ABRIR E FECHAR OS MODAIS
         function openModalWork() {
+            editingWorkoutId = null;
+            document.querySelector("#modal_work form").reset();
+            document.getElementById("workoutModalTitle").textContent = "Registrar treino";
+            document.getElementById("workoutModalDescription").textContent = "Preencha os dados do seu treino.";
+            document.getElementById("workoutSubmitButton").textContent = "Registrar treino";
             modal_work.style.display = "flex";
         }
 
         function closeModalWork() {
             modal_work.style.display = "none";
+            editingWorkoutId = null;
         }
 
 
@@ -159,10 +167,75 @@
                     works[i].name + " - " +
                     works[i].sets + " séries";
 
+                var actions = document.createElement("div");
+                actions.className = "workout-actions";
+
+                var editButton = document.createElement("button");
+                editButton.type = "button";
+                editButton.className = "btn-cancel";
+                editButton.textContent = "Editar";
+                editButton.dataset.workoutId = works[i].id;
+                editButton.onclick = function () {
+                    editWork(Number(this.dataset.workoutId));
+                };
+
+                var removeButton = document.createElement("button");
+                removeButton.type = "button";
+                removeButton.className = "btn-cancel workout-remove";
+                removeButton.textContent = "Remover";
+                removeButton.dataset.workoutId = works[i].id;
+                removeButton.onclick = function () {
+                    removeWork(Number(this.dataset.workoutId));
+                };
+
+                actions.appendChild(editButton);
+                actions.appendChild(removeButton);
+                item.appendChild(actions);
                 list.appendChild(item);
             }
         }
+        
+        // editar treino
+        function editWork(workoutId) {
+            for (var i = 0; i < works.length; i++) {
+                if (works[i].id == workoutId) {
+                    input_exerciseName.value = works[i].name;
+                    select_muscleGroup.value = works[i].muscleGroup;
+                    input_sets.value = works[i].sets;
+                    input_workoutDate.value = works[i].date;
+                    editingWorkoutId = workoutId;
+                    document.getElementById("workoutModalTitle").textContent = "Editar treino";
+                    document.getElementById("workoutModalDescription").textContent = "Altere os dados deste exercício.";
+                    document.getElementById("workoutSubmitButton").textContent = "Salvar alterações";
+                    modal_work.style.display = "flex";
+                    return;
+                }
+            }
+        }
 
+        // remover treino
+        function removeWork(workoutId) {
+            if (!confirm("Deseja remover este exercício?")) {
+                return;
+            }
+
+            var userId = sessionStorage.getItem("userId");
+
+            fetch("/workouts/" + userId + "/" + workoutId, {
+                method: "DELETE"
+            }).then(function (response) {
+                if (response.ok) {
+                    alert("Exercício removido com sucesso!");
+                    loadWorkouts();
+                } else {
+                    alert("Não foi possível remover o exercício.");
+                }
+            }).catch(function (error) {
+                console.error(error);
+                alert("Não foi possível conectar ao servidor.");
+            });
+        }
+        // registrar treino
         function registerWork() {
             var userId = sessionStorage.getItem("userId");
             var name = input_exerciseName.value.trim();
@@ -172,14 +245,26 @@
 
             var Valid = true;
 
-            if (name == "" || muscleGroup == "" || sets <= 0 || date == "") {
+            if (name == "" || name.length > 45 || muscleGroup == "" || !Number.isInteger(sets) || sets <= 0 || date == "") {
                 alert("Preencha todos os campos corretamente.");
                 Valid = false;
             }
 
             if (Valid) {
-                fetch("/workouts/" + userId, {
-                    method: "POST",
+                var url = "/workouts/" + userId;
+                var method = "POST";
+                var successMessage = "Treino registrado com sucesso!";
+                var errorMessage = "Não foi possível registrar o treino.";
+
+                if (editingWorkoutId != null) {
+                    url += "/" + editingWorkoutId;
+                    method = "PUT";
+                    successMessage = "Treino atualizado com sucesso!";
+                    errorMessage = "Não foi possível atualizar o treino.";
+                }
+
+                fetch(url, {
+                    method: method,
                     headers: {
                         "Content-Type": "application/json"
                     },
@@ -191,11 +276,11 @@
                     })
                 }).then(function (response) {
                     if (response.ok) {
-                        alert("Treino registrado com sucesso!");
+                        alert(successMessage);
                         closeModalWork();
                         loadWorkouts();
                     } else {
-                        alert("Não foi possível registrar o treino.");
+                        alert(errorMessage);
                     }
                 }).catch(function (error) {
                     console.error(error);

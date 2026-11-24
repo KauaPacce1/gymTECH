@@ -11,4 +11,12 @@ router.get("/:userId", function (req, res) {
     workoutController.list(req, res);
 });
 
+router.put("/:userId/:workoutId", function (req, res) {
+    workoutController.update(req, res);
+});
+
+router.delete("/:userId/:workoutId", function (req, res) {
+    workoutController.remove(req, res);
+});
+
 module.exports = router;
